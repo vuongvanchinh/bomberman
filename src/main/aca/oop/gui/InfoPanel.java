@@ -7,6 +7,5 @@ public class InfoPanel extends JPanel {
    private JLabel timeLabel;
    private JLabel pointLabel;
    private JLabel livesLabel;
-
-   
+  
 }
