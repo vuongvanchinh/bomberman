@@ -15,7 +15,7 @@ public class AnimatedEntity extends Entity {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		
 
 	}
 
