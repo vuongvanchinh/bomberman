@@ -6,7 +6,7 @@ import aca.oop.graphics.Screen;
 
 public class Player extends Mob {
 
-   protected Player(int x, int y, Board board) {
+   public Player(int x, int y, Board board) {
       super(x, y, board);
       
    }
