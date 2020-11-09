@@ -28,8 +28,6 @@ public abstract class Enemy extends Mob {
       deadSprite = dead;
    }
 
-
-   @Override
    public void update() {
       animate();
 
@@ -40,7 +38,6 @@ public abstract class Enemy extends Mob {
       }
    }
 
-   @Override
    public void render(Screen screen) {
       if (alive) {
          chooseSprite();
@@ -82,8 +79,7 @@ public abstract class Enemy extends Mob {
 
    }
 
-   @Override
-   protected boolean canMove(double x, double y) {
+   protected boolean canMove(double x, double y, int i) {
      
       return false;
    }

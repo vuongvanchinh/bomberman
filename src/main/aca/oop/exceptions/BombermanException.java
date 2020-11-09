@@ -1,12 +1,16 @@
 package aca.oop.exceptions;
 
 public class BombermanException extends Exception {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public BombermanException() {
 	}
 	
 	public BombermanException(String str) {
 		super(str);
-		
 	}
 	
 	public BombermanException(String str, Throwable cause) {
@@ -16,7 +20,6 @@ public class BombermanException extends Exception {
 	
 	public BombermanException(Throwable cause) {
 		super(cause);
-		
 	}
 
 }

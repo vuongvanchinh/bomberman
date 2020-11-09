@@ -26,7 +26,6 @@ public class Bomb extends AnimatedEntity {
       sprite = Sprite.bomb;
    }
 
-   @Override
    public void update() {
       if(timeToExplode > 0) {
          timeToExplode--;
@@ -39,12 +38,10 @@ public class Bomb extends AnimatedEntity {
 				timeAfter--;
 			else
 				remove();
-		}
-			
+		}		
 		animate();
    }
 
-   @Override
    public void render(Screen screen) {
       if(exploded) {
 			sprite =  Sprite.bomb_exploded2;
@@ -90,13 +87,25 @@ public class Bomb extends AnimatedEntity {
       }
    }
 
+   public Explosion explosionAt(int x, int y) {
+		if(!exploded) return null;
+		
+		for (int i = 0; i < explosions.length; i++) {
+			if(explosions[i] == null) return null;
+			Explosion e = explosions[i].explosionAt(x, y);
+			if(e != null) return e;
+		}
+		
+		return null;
+	}
+
    @Override
    public boolean collide(Entity e) {
       if (e instanceof Player) {
          double diffX = e.getX() - Coordinates.tileToPixel(this.getX());
          double diffY = e.getY() - Coordinates.tileToPixel(this.getY());
 
-         if (!(diffX >= -0 && diffX < 16 && diffY >= 1 && diffX <= 28)) {
+         if (!(diffX >= -10 && diffX < 16 && diffY >= 1 && diffX <= 28)) {
             allowedToPassThru = false;
          }
          return allowedToPassThru;

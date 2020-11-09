@@ -55,13 +55,13 @@ public class Explosion extends Entity {
    }
 
 
-   @Override
+ 
    public void update() {
       
 
    }
 
-   @Override
+ 
    public void render(Screen screen) {
       int xt = (int)this.x << 4;
 		int yt = (int)this.y << 4;

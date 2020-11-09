@@ -72,13 +72,21 @@ public class DirectionalExplosion extends Entity {
       return lRadius;
    }
 
-   @Override
+   public Explosion explosionAt(int x, int y) {
+      for (int i = 0; i < explosions.length; i++) {
+         if (explosions[i].getX() == x && explosions[i].getY() == y) {
+            return explosions[i];
+         }
+      }
+      return null;
+   }
+
    public void update() {
       
 
    }
 
-   @Override
+
    public void render(Screen screen) {
       for (int i = 0; i < explosions.length; i++) {
          explosions[i].render(screen);

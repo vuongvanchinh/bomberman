@@ -3,8 +3,12 @@ package aca.oop.level;
 import aca.oop.Game;
 
 public class Coordinates {
+   private Coordinates() {
+
+   }
+   
    public static int pixelToTile(double i) {
-      return (int) (i / Game.TILES_SIZE);
+      return (int)(i / Game.TILES_SIZE);
    } 
 
    public static int tileToPixel(int i) {

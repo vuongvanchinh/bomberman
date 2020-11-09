@@ -2,19 +2,13 @@ package aca.oop.entities;
 
 import aca.oop.graphics.Sprite;
 import aca.oop.graphics.IRender;
-import aca.oop.graphics.Screen;
 import aca.oop.level.Coordinates;
 
 public abstract class Entity implements IRender {
-   protected double x, y;
+	protected double x;
+	protected double y;
 	protected boolean removed = false;
 	protected Sprite sprite;
-	
-	
-	public abstract void update();
-	
-	
-	public abstract void render(Screen screen);
 	
 	public void remove() {
 		removed = true;

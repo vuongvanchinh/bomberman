@@ -5,19 +5,23 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.lang.reflect.Array;
 
-
-import aca.oop.exceptions.BombermanException;
 import aca.oop.graphics.Screen;
 import aca.oop.gui.Frame;
 import aca.oop.input.Keyboard;
 
 public class Game extends Canvas {
 	
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/*
-	|--------------------------------------------------------------------------
-	| Options & Configs
-	|--------------------------------------------------------------------------
+	 * |-------------------------------------------------------------------------- |
+	 * Options & Configs
+	 * |--------------------------------------------------------------------------
 	 */
 	public static final double VERSION = 1.9;
 	
@@ -38,7 +42,7 @@ public class Game extends Canvas {
 	public static final int POINTS = 0;
 	public static final int LIVES = 3;
 	
-	protected static int SCREEN_DELAY = 3;
+	protected static final int SCREEN_DELAY = 3;
 	
 	
 	//can be modified with bonus
@@ -68,9 +72,8 @@ public class Game extends Canvas {
 		
 		screen = new Screen(WIDTH, HEIGHT);
 		input = new Keyboard();
-		
-		board = new Board(this, input, screen);
 		addKeyListener(input);
+		board = new Board(this, input, screen);
 	}
 	
 	
@@ -84,11 +87,11 @@ public class Game extends Canvas {
 		screen.clear();
 		
 		board.render(screen);
-		
+
 		for (int i = 0; i < pixels.length; i++) { //create the image to be rendered
 			pixels[i] = screen.pixels[i];
 		}
-		
+
 		Graphics g = bs.getDrawGraphics();
 		
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
@@ -98,7 +101,7 @@ public class Game extends Canvas {
 		bs.show(); //make next buffer visible
 	}
 	
-	private void renderScreen() { //TODO: merge these render methods
+	private void renderScreen() { // merge these render methods
 		BufferStrategy bs = getBufferStrategy();
 		if(bs == null) {
 			createBufferStrategy(3);
@@ -238,5 +241,16 @@ public class Game extends Canvas {
 	public void pause() {
 		paused = true;
 	}
-	
+
+	public static void resetPlayerSpeed() {
+		playerSpeed = PLAYER_SPEED;
+	}
+
+	public static void resetBombRadius() {
+		bombRadius = BOMB_RADIUS;
+	}
+
+	public static void resetBombRate() {
+		bombRate = BOMB_RATE;
+	}
 }

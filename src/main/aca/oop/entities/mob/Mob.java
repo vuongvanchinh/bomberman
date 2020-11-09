@@ -3,7 +3,6 @@ package aca.oop.entities.mob;
 import aca.oop.Board;
 import aca.oop.Game;
 import aca.oop.entities.AnimatedEntity;
-import aca.oop.graphics.Screen;
 
 public abstract class Mob extends AnimatedEntity {
    protected Board board;
@@ -17,13 +16,7 @@ public abstract class Mob extends AnimatedEntity {
       this.y = y;
       this.board = board;
    }
-
-   @Override
-	public abstract void update();
-	
-	@Override
-	public abstract void render(Screen screen);
-	
+   
 	protected abstract void calculateMove();
 	
 	protected abstract void move(double xa, double ya);

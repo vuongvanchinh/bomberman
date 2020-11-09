@@ -4,27 +4,27 @@ import java.awt.Color;
 import aca.oop.graphics.Screen;
 
 public class Message extends Entity {
-   protected String message;
+   protected String content;
    protected int duration;
    protected Color color;
    protected int size;
 
-   public Message(String message, double x, double y, int duration, Color color, int size) {
+   public Message(String content, double x, double y, int duration, Color color, int size) {
       this.x = x;
       this.y = y;
-      this.message = message;
+      this.content = content;
       this.color = color;
-      this.duration = duration;
+      this.duration = duration * 60;
       this.size = size;
    }
 
 
    public String getMessage() {
-      return this.message;
+      return this.content;
    }
 
-   public void setMessage(String message) {
-      this.message = message;
+   public void setMessage(String content) {
+      this.content = content;
    }
 
    public int getDuration() {
@@ -51,21 +51,16 @@ public class Message extends Entity {
       this.size = size;
    }
 
-   @Override
+   
    public void update() {
-      // TO DO Auto-generated method stub
-
    }
 
-   @Override
+
    public void render(Screen screen) {
-      // TO DO Auto-generated method stub
-
    }
 
-   @Override
+
    public boolean collide(Entity e) {
-      // TO DO Auto-generated method stub
       return true;
    }
 

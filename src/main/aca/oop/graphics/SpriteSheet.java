@@ -1,36 +1,41 @@
 package aca.oop.graphics;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
-
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class SpriteSheet {
 
 	private String path;
 	public final int SIZE;
 	public int[] pixels;
-	
-	public static SpriteSheet tiles = new SpriteSheet("/textures/classic.png", 256);
+	//C:/Users/Dell/Desktop/bomberman/res/textures/classic.png res\textures\classic.png
+	public static SpriteSheet tiles = new SpriteSheet("res/textures/classic.png", 256);
 	
 	public SpriteSheet(String path, int size) {
-		path = path;
+		this.path = path;
 		SIZE = size;
 		pixels = new int[SIZE * SIZE];
 		load();
+		System.out.println("Test sprite sheet");
 	}
+	
+	// public static void main(String[] args) {
+	// 	new SpriteSheet("res/textures/classic.png", 256);
+	// }
 	
 	private void load() {
 		try {
-			URL a = SpriteSheet.class.getResource(path);
+			File a = new File(this.path);
 			BufferedImage image = ImageIO.read(a);
+			System.out.println("test Sprite sheet.");
 			int w = image.getWidth();
 			int h = image.getHeight();
 			image.getRGB(0, 0, w, h, pixels, 0, w);
+			image.getRGB(0, 0, w, h, pixels, 0, w);
 		} catch (IOException e) {
 			e.printStackTrace();
-			//TO DO: what should this do? stop the program? yes i think
 			System.exit(0);
 		}
 	}

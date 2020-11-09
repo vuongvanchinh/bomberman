@@ -1,6 +1,11 @@
 package aca.oop.exceptions;
 
 public class LoadLevelException extends BombermanException {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public LoadLevelException() {
 	}
 	

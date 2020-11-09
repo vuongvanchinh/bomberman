@@ -2,10 +2,11 @@ package aca.oop.entities.mob.enemy;
 
 import aca.oop.Board;
 import aca.oop.Game;
+import aca.oop.entities.Entity;
 import aca.oop.graphics.Sprite;
 
 public class Kondoria extends Enemy {
-   
+
    public Kondoria(int x, int y, Board board) {
       super(x, y, board, Sprite.kondoria_dead, Game.getPlayerSpeed() / 4, 1000);
       this.sprite = Sprite.kondoria_right1;
@@ -14,12 +15,12 @@ public class Kondoria extends Enemy {
 
    @Override
    protected void chooseSprite() {
-      switch(direction) {
+      switch (direction) {
          case 0:
          case 1:
             if (moving) {
-               this.sprite = Sprite.movingSprite(
-                  Sprite.kondoria_right1, Sprite.kondoria_right2, Sprite.kondoria_right3, animate, 60);
+               this.sprite = Sprite.movingSprite(Sprite.kondoria_right1, Sprite.kondoria_right2, Sprite.kondoria_right3,
+                     animate, 60);
             } else {
                this.sprite = Sprite.kondoria_left1;
             }
@@ -27,8 +28,8 @@ public class Kondoria extends Enemy {
          case 2:
          case 3:
             if (moving) {
-               this.sprite = Sprite.movingSprite(
-                  Sprite.kondoria_left1, Sprite.kondoria_left2, Sprite.kondoria_left3, animate, 60);
+               this.sprite = Sprite.movingSprite(Sprite.kondoria_left1, Sprite.kondoria_left2, Sprite.kondoria_left3,
+                     animate, 60);
             } else {
                this.sprite = Sprite.balloom_left1;
             }
@@ -37,6 +38,18 @@ public class Kondoria extends Enemy {
             break;
       }
 
+   }
+
+   @Override
+   protected boolean canMove(double x, double y) {
+      
+      return false;
+   }
+
+   @Override
+   public boolean collide(Entity e) {
+      
+      return false;
    }
    
 }

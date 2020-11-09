@@ -3,7 +3,8 @@ package aca.oop.graphics;
 public class Sprite {
 	
 	public final int SIZE;
-	private int x, y;
+	private int x;
+	private int y;
 	public int[] pixels;
 	protected int realWidth;
 	protected int realHeight;
@@ -177,6 +178,7 @@ public class Sprite {
 	public static final Sprite powerup_flamepass = new Sprite(16, 6, 10, SpriteSheet.tiles, 16, 16);
 	
 	public Sprite(int size, int x, int y, SpriteSheet sheet, int rw, int rh) {
+		//System.out.println("test Sprite1");
 		SIZE = size;
 		pixels = new int[SIZE * SIZE];
 		this.x = x * SIZE;
@@ -184,7 +186,9 @@ public class Sprite {
 		this.sheet = sheet;
 		this.realWidth = rw;
 		this.realHeight = rh;
+		
 		load();
+		//System.out.println("test Sprite");
 	}
 	
 	public Sprite(int size, int color) {
