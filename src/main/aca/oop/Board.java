@@ -3,6 +3,8 @@ package aca.oop;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -47,7 +49,7 @@ public class Board implements IRender {
       this.game = game;
       this.input = input;
       this.screen = screen;
-      //this.record = getRecord(true);
+      this.record = getRecord(true);
       changeLevel(1); 
    }
 
@@ -262,13 +264,30 @@ public class Board implements IRender {
             sc.close();
          } catch (Exception e) {
             System.out.println("Lỗi đọc file record.txt.");
+            e.printStackTrace();
          }
       }
       return this.record;
    }
 
-   public void setRecord(int record) {
+   /**
+    * 
+    * @param record record want to create;
+    * @param toFile whether export to file?
+    */
+   public void createRecord(int record, boolean toFile) {
       this.record = record;
+      if (toFile) {
+         try {
+            FileWriter myWriter = new FileWriter("res/record.txt");
+            myWriter.write(record + "");
+            myWriter.close();
+            System.out.println("Successfully wrote to the record file.");
+          } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+          }
+      }
    }
 
    public int getWidth() {
@@ -347,8 +366,8 @@ public class Board implements IRender {
       return this.points;
    }
 
-   public void setPoints(int points) {
-      this.points = points;
+   public void addPoints(int points) {
+      this.points += points;
    }
 
    public int subtractTime() {

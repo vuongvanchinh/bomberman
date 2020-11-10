@@ -1,7 +1,13 @@
 package aca.oop.entities.mob.enemy;
 
+import java.awt.Color;
+
 import aca.oop.Board;
 import aca.oop.Game;
+import aca.oop.entities.Entity;
+import aca.oop.entities.Message;
+import aca.oop.entities.Player;
+import aca.oop.entities.bomb.DirectionalExplosion;
 import aca.oop.entities.mob.Mob;
 import aca.oop.graphics.Screen;
 import aca.oop.graphics.Sprite;
@@ -69,13 +75,26 @@ public abstract class Enemy extends Mob {
 
    @Override
    public void kill() {
-     
-
+      if (!alive) return;
+      alive = false;
+      board.addPoints(points);
+      if (board.getPoints() > board.getRecord(false)) {
+         board.createRecord(board.getPoints(), false);
+      }
+      Message msg = new Message("+" + points, getXMessage(), getYMessage(), 4, Color.WHITE, 14);
+      board.addMessage(msg);
    }
 
    @Override
    protected void afterKill() {
-     
+     if (timeAfter > 0) {
+        timeAfter--;
+     } else {
+         if (finalAnimation > 0) --finalAnimation;
+         else {
+            remove();
+         }
+     }
 
    }
 
@@ -84,4 +103,16 @@ public abstract class Enemy extends Mob {
       return false;
    }
    
+   public boolean collide(Entity e) {
+      if (e instanceof DirectionalExplosion) {
+         kill();
+         return false;
+      }
+
+      if (e instanceof Player) {
+         ((Player) e).kill();
+         return false;
+      }
+      return true;
+   }
 }

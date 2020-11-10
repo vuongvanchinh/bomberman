@@ -43,6 +43,7 @@ public class DirectionalExplosion extends Entity {
                break;
           }
           explosions[i] = new Explosion(x, y, direction, last, board);
+         
       }
    }
 
@@ -52,17 +53,22 @@ public class DirectionalExplosion extends Entity {
       int y = (int)this.y;
       
       while(lRadius < this.radius) {
-         switch(direction) {
-            case 0: y--; break;
-            case 1: x++; break;
-            case 2: y++; break;
-            case 3: x--; break;
-            default:
-               break;
-         }
+         // switch(direction) {
+         //    case 0: y--; break;
+         //    case 1: x++; break;
+         //    case 2: y++; break;
+         //    case 3: x--; break;
+         //    default:
+         //       break;
+         // }
+         if(direction == 0) {y--;}
+			if(direction == 1) {x++;}
+			if(direction == 2) {y++;}
+         if(direction == 3) {x--;}
+         
          Entity a = board.getEntity(x, y, null);
 
-         if (a instanceof Mob) ++radius; //explosion has to be below the mob
+         if (a instanceof Mob) ++lRadius; //explosion has to be below the mob
 
          if (!a.collide(this)) { // cannot pass thru
             break;
@@ -82,8 +88,6 @@ public class DirectionalExplosion extends Entity {
    }
 
    public void update() {
-      
-
    }
 
 
@@ -97,7 +101,7 @@ public class DirectionalExplosion extends Entity {
    @Override
    public boolean collide(Entity e) {
       
-      return false;
+      return true;
    }
    
 

@@ -1,6 +1,7 @@
 package aca.oop.gui;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import aca.oop.Game;
@@ -36,7 +37,19 @@ public class Frame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
 		setLocationRelativeTo(null);
-		setVisible(true);
+      setVisible(true);
+      addWindowListener(new java.awt.event.WindowAdapter() {
+         @Override
+         public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+             if (JOptionPane.showConfirmDialog(null, 
+                 "Are you sure you want to quit game?", "Quit?", 
+                 JOptionPane.YES_NO_OPTION,
+                 JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+                  writeRecord();
+                  System.exit(0);
+               }
+         }
+     });
 
       game.start();
    }
@@ -69,5 +82,14 @@ public class Frame extends JFrame {
 		infoPane.setPoints(points);
 	}
 
+   public void setRecord(int record) {
+      infoPane.setRecord(record);
+   }
+   public void writeRecord() {
+      int record = game.getBoard().getRecord(false);
+      game.getBoard().createRecord(record, true);
+
+     // System.out.println("write to re");
+   }
 
 }

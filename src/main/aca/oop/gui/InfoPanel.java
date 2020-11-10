@@ -37,7 +37,7 @@ public class InfoPanel extends JPanel {
 		livesLabel.setForeground(Color.white);
 		livesLabel.setHorizontalAlignment(JLabel.CENTER);
 
-      recordLabel = new JLabel("Record: " + game.getBoard().getRecord(false));
+      recordLabel = new JLabel("Record: " + game.getBoard().getRecord(true));
 		recordLabel.setForeground(Color.white);
 		recordLabel.setHorizontalAlignment(JLabel.CENTER);
       

@@ -2,7 +2,6 @@ package aca.oop.entities.mob.enemy;
 
 import aca.oop.Board;
 import aca.oop.Game;
-import aca.oop.entities.Entity;
 import aca.oop.graphics.Sprite;
 
 public class Minvo extends Enemy {
@@ -39,12 +38,6 @@ public class Minvo extends Enemy {
 
    @Override
    protected boolean canMove(double x, double y) {
-      
-      return false;
-   }
-
-   @Override
-   public boolean collide(Entity e) {
       
       return false;
    }

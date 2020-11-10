@@ -124,7 +124,7 @@ public class Screen {
 	}
 
 	public void drawPaused(Graphics g) {
-		Font font = new Font("Arial", Font.PLAIN, 20* Game.SCALE);
+		Font font = new Font("Arial", Font.PLAIN, 20 * Game.SCALE);
 		g.setFont(font);
 		g.setColor(Color.white);
 		drawCenteredString("Tạm dừng", getRealHeight(), getHeight(), g);
@@ -134,7 +134,7 @@ public class Screen {
 	private void drawCenteredString(String str, int w, int h, Graphics g) {
 		FontMetrics fm = g.getFontMetrics();
 		int x = (w - fm.stringWidth(str)) / 2;
-		int y = (fm.getAscent() + (h - (fm.getAscent() + fm.getDescent())) /2);
+		int y = (fm.getAscent() + (h - (fm.getAscent() + fm.getDescent())) / 2);
 		g.drawString(str, x, y);
 	}
 

@@ -159,6 +159,7 @@ public class Game extends Canvas {
 				frame.setTime(board.subtractTime());
 				frame.setPoints(board.getPoints());
 				frame.setLives(board.getLives());
+				frame.setRecord(board.getRecord(false));
 				timer += 1000;
 				frame.setTitle(TITLE + " | " + updates + " rate, " + frames + " fps");
 				updates = 0;

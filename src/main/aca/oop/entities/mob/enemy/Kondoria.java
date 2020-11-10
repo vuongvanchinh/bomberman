@@ -2,7 +2,6 @@ package aca.oop.entities.mob.enemy;
 
 import aca.oop.Board;
 import aca.oop.Game;
-import aca.oop.entities.Entity;
 import aca.oop.graphics.Sprite;
 
 public class Kondoria extends Enemy {
@@ -46,10 +45,4 @@ public class Kondoria extends Enemy {
       return false;
    }
 
-   @Override
-   public boolean collide(Entity e) {
-      
-      return false;
-   }
-   
 }
