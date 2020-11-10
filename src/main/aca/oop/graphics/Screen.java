@@ -75,7 +75,10 @@ public class Screen {
    }
    
    public static int calculateXOffset(Board board, Player player) {
-		if(player == null) return 0;
+		if(player == null){
+			System.out.println("player is null");
+			return 0;
+		}
 		int temp = xOffset;
 		
 		double playerX = player.getX() / 16;
@@ -83,7 +86,7 @@ public class Screen {
 		int firstBreakpoint = board.getWidth() / 4;
 		int lastBreakpoint = board.getWidth() - firstBreakpoint;
 		
-		if( playerX > firstBreakpoint + complement && playerX < lastBreakpoint - complement) {
+		if(playerX > firstBreakpoint + complement && playerX < lastBreakpoint - complement) {
 			temp = (int)player.getX()  - (Game.WIDTH / 2);
 		}
 		

@@ -47,6 +47,10 @@ public class Message extends Entity {
       return this.size;
    }
 
+   public void setY(double y) {
+      this.y = y;
+   }
+
    public void setSize(int size) {
       this.size = size;
    }

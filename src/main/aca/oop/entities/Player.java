@@ -57,11 +57,11 @@ public class Player extends Mob {
          sprite = Sprite.player_dead1;
       }
       screen.renderEntity((int)x, (int)y - sprite.SIZE, this);
-
    }
 
    public void calculateXOffset() {
       int xScroll = Screen.calculateXOffset(board, this);
+      //System.out.println("x scroll<player.calculateXOffset> : " + xScroll);
       Screen.setOffset(xScroll, 0);
    }
 
@@ -104,7 +104,7 @@ public class Player extends Mob {
       }
       alive = false;
       board.addLives(-1);
-      Message msg = new Message("- 1 LIVE", getXMessage(), getXMessage(), 2, Color.WHITE, 14);
+      Message msg = new Message("- 1 LIVE", getXMessage(), getXMessage(), 4, Color.WHITE, 18);
       board.addMessage(msg);
    }
 

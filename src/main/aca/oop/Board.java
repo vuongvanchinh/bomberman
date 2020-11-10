@@ -272,19 +272,19 @@ public class Board implements IRender {
    }
 
    public int getWidth() {
-      return this.width;
+      return this.level.getWidth();
    }
 
    public void setWidth(int width) {
-      this.width = width;
+      this.level.setWidth(width);
    }
 
    public int getHeight() {
-      return this.height;
+      return this.level.getHeight();
    }
 
    public void setHeight(int height) {
-      this.height = height;
+      this.level.setHeight(height);
    }
 
    public Game getGame() {
@@ -457,7 +457,7 @@ public class Board implements IRender {
 	 */
 	public void addEntities(int pos, Entity e) {
       entities[pos] = e;
-      System.out.println("pos:" + pos);
+      //System.out.println("pos:" + pos);
 	}
 	
 	public void addMob(Mob e) {
@@ -501,7 +501,6 @@ public class Board implements IRender {
 		Message m;
 		for (int i = 0; i < messages.size(); i++) {
 			m = messages.get(i);
-			
 			g.setFont(new Font("Arial", Font.PLAIN, m.getSize()));
 			g.setColor(m.getColor());
 			g.drawString(m.getMessage(), (int)m.getX() - Screen.xOffset  * Game.SCALE, (int)m.getY());
@@ -546,6 +545,7 @@ public class Board implements IRender {
          left = m.getDuration();
          if (left > 0) {
             m.setDuration(--left);
+            m.setY(m.getY() - 0.2);
             i++;
          } else {
             messages.remove(i);
