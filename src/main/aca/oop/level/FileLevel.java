@@ -138,7 +138,8 @@ public class FileLevel extends Level {
             board.addEntities(pos, new Grass(x, y, Sprite.grass));
             break;
          case '2':
-            board.addMob(new Oneal(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), board));
+            board.addMob(new Oneal(
+               Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, board));
             board.addEntities(pos, new Grass(x, y, Sprite.grass));
          break;
          case '3':
