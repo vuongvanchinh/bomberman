@@ -15,7 +15,7 @@ public class SpeedItem extends Item {
   
    public boolean collide(Entity e) {
       if (e instanceof Player) {
-       //((Player) e).addPowerup(this);
+       ((Player) e).addItem(this);
          remove();
          return true;
       }

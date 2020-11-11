@@ -253,4 +253,4 @@ public class Game extends Canvas {
 	public static void resetBombRate() {
 		bombRate = BOMB_RATE;
 	}
-}
+}//orient object programming

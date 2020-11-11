@@ -67,6 +67,7 @@ public class Board implements IRender {
       updateBombs();
       updateMessages();
       detectEndGame();
+      input.update();
 
       int i = 0;
       while (i < mobs.size()) {
@@ -180,7 +181,7 @@ public class Board implements IRender {
             ++total;
          }
       }
-      return total == 0;
+      return (total == 0) && bombs.isEmpty();
    }
 
    public void gamePause() {
@@ -439,11 +440,9 @@ public class Board implements IRender {
 			if(cur == a) {
 				continue;
 			}
-			
 			if(cur.getXTile() == x && cur.getYTile() == y) {
 				return cur;
 			}
-				
 		}
 		
 		return null;

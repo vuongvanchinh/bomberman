@@ -74,7 +74,6 @@ public class Bomb extends AnimatedEntity {
    protected void explosion() {
       allowedToPassThru = true;
       exploded = true;
-
       Mob a = board.getMobAt(this.x, this.y);
       if (a != null) {
          a.kill();

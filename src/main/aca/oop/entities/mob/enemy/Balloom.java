@@ -2,13 +2,15 @@ package aca.oop.entities.mob.enemy;
 
 import aca.oop.Board;
 import aca.oop.Game;
+import aca.oop.entities.mob.enemy.ai.AILow;
 import aca.oop.graphics.Sprite;
 
 public class Balloom extends Enemy {
    public Balloom(int x, int y, Board board) {
       super(x, y, board, Sprite.balloom_dead, Game.getPlayerSpeed() / 2, 100);
       this.sprite = Sprite.balloom_left1;
-      // direction =
+      ai = new AILow();
+      direction = ai.calculateDirection();
    }
 
    @Override
@@ -28,11 +30,4 @@ public class Balloom extends Enemy {
       }
 
    }
-
-   @Override
-   protected boolean canMove(double x, double y) {
-     
-      return false;
-   }
-
 }

@@ -106,7 +106,7 @@ public class FileLevel extends Level {
                new Brick(x ,y, Sprite.brick));
 
             if (!this.board.isItemUsed(x, y, thLevel)) {
-               layer.addBeforeTop(new FlameItem(x, y, thLevel,  Sprite.powerup_speed));
+               layer.addBeforeTop(new FlameItem(x, y, thLevel,  Sprite.powerup_flames));
             }
             board.addEntities(pos, layer);
             break;
@@ -162,5 +162,4 @@ public class FileLevel extends Level {
             break;
       }
    }
-   
 }

@@ -231,8 +231,9 @@ public class Sprite {
 		return x2;
 	}
 	
-	public static final Sprite movingSprite(Sprite x1, Sprite x2, int animate, int time) {
+	public static Sprite movingSprite(Sprite x1, Sprite x2, int animate, int time) {
 		int diff = time / 2;
+		//System.out.println("animate at: movingSprite() " + animate);
 		return (animate % time > diff) ? x1 : x2; 
 	}
 	

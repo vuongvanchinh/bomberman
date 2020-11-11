@@ -18,7 +18,7 @@ public class SpriteSheet {
 		SIZE = size;
 		pixels = new int[SIZE * SIZE];
 		load();
-		System.out.println("Test sprite sheet");
+		//System.out.println("Test sprite sheet");
 	}
 	
 	// public static void main(String[] args) {

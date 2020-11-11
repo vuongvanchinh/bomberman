@@ -14,7 +14,7 @@ public class BombItem extends Item {
 
    public boolean collide(Entity e) {
       if(e instanceof Player) {
-			//((Player) e).addPowerup(this);
+			((Player) e).addItem(this);
 			remove();
 			return true;
 		}
@@ -26,5 +26,4 @@ public class BombItem extends Item {
       active = true;
       Game.addBombRate(1);
    }
-
 }

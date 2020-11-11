@@ -136,6 +136,7 @@ public class Player extends Mob {
          //System.out.println(String.format("xt:%.1f, yt: %.1f", xt, yt));
          Entity a = board.getEntity(xt, yt, this);
          if (!a.collide(this)) {
+
             return false;
          }
       }
@@ -150,9 +151,10 @@ public class Player extends Mob {
 		if(input.down) {ya++;}
 		if(input.left) {xa--;}
 		if(input.right) {xa++;}
-
+      System.out.println("calculate move in player.java" + (xa + ya));
       if (xa != 0 || ya != 0) {
          move(xa * Game.getPlayerSpeed(), ya * Game.getPlayerSpeed());
+         moving = true;
       } else {
          moving = false;
       }
@@ -161,7 +163,7 @@ public class Player extends Mob {
 
    @Override
    public void move(double xa, double ya) {
-      System.out.println(String.format("xa: %.1f, ya:%.1f",xa, ya));
+      //System.out.println(String.format("xa: %.1f, ya:%.1f",xa, ya));
       if (xa > 0) {direction = 1;}
       if (xa < 0) {direction = 3;}
       if (ya > 0) {direction = 2;}
@@ -222,6 +224,7 @@ public class Player extends Mob {
          case 0:
             sprite = Sprite.player_up;
             if (moving) {
+               System.out.println("up sprite");
                sprite = Sprite.movingSprite(Sprite.player_up_1, Sprite.player_up_2, animate, 20);
             }
             break;

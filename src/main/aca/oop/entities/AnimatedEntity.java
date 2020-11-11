@@ -9,5 +9,7 @@ public abstract class AnimatedEntity extends Entity {
 			animate++;
 		else
 			animate = 0; // reset animation
+		//System.out.println("animate: " + animate);
 	}
 }
+	

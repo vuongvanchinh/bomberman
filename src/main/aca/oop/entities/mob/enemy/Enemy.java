@@ -9,13 +9,15 @@ import aca.oop.entities.Message;
 import aca.oop.entities.Player;
 import aca.oop.entities.bomb.DirectionalExplosion;
 import aca.oop.entities.mob.Mob;
+import aca.oop.entities.mob.enemy.ai.AI;
 import aca.oop.graphics.Screen;
 import aca.oop.graphics.Sprite;
+import aca.oop.level.Coordinates;
 
 public abstract class Enemy extends Mob {
    protected int points;
    protected double speed;
-
+   protected AI ai;
    protected final double  MAX_STEPS;
    protected final double rest;
    protected double steps;
@@ -63,7 +65,26 @@ public abstract class Enemy extends Mob {
 
    @Override
    protected void calculateMove() {
-     
+      int xa = 0;
+      int ya = 0;
+      if (steps <= 0) {
+         direction = ai.calculateDirection();
+         steps = MAX_STEPS;
+      }
+      if(direction == 0) {ya--;}
+      if(direction == 1) {xa++;}
+		if(direction == 2) {ya++;}
+		if(direction == 3) {xa--;}
+		
+      if (canMove(xa, ya)) {
+         steps -= 1 + rest;
+         move(xa * speed, ya * speed);
+         moving = true;
+      } else {
+         steps = 0;
+         moving = false;
+      }
+
    }
 
    @Override
@@ -98,10 +119,24 @@ public abstract class Enemy extends Mob {
 
    }
 
-   protected boolean canMove(double x, double y, int i) {
-     
-      return false;
+   @Override
+   protected boolean canMove(double x, double y) {
+      double xr = this.x;
+      double yr = this.y - 16;
+
+      if(direction == 0) { yr += sprite.getSize() - 1 ; xr += sprite.getSize()/2; } 
+		if(direction == 1) {yr += sprite.getSize() / 2; xr += 1;}
+		if(direction == 2) { xr += sprite.getSize() / 2; yr += 1;}
+		if(direction == 3) { xr += sprite.getSize() -1; yr += sprite.getSize()/2;}
+		
+		int xx = Coordinates.pixelToTile(xr) +(int)x;
+		int yy = Coordinates.pixelToTile(yr) +(int)y;
+		
+		Entity a = board.getEntity(xx, yy, this); //entity of the position we want to go
+		
+		return a.collide(this);
    }
+
    
    public boolean collide(Entity e) {
       if (e instanceof DirectionalExplosion) {
