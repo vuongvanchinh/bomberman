@@ -7,6 +7,7 @@ import aca.oop.entities.Entity;
 import aca.oop.entities.Player;
 import aca.oop.graphics.Screen;
 import aca.oop.graphics.Sprite;
+import aca.oop.level.Audio;
 import aca.oop.level.Coordinates;
 //import aca.oop.entities.bomb.DirectionalExplosion;
 import aca.oop.entities.mob.Mob;
@@ -84,6 +85,7 @@ public class Bomb extends AnimatedEntity {
       for (int i = 0; i < explosions.length; i++) {
          explosions[i] = new DirectionalExplosion((int)this.x, (int)this.y, i, Game.getBombRadius(), board);
       }
+      Audio.playBombExplode();
    }
 
    public Explosion explosionAt(int x, int y) {

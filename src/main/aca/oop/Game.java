@@ -9,6 +9,7 @@ import java.awt.image.DataBufferInt;
 import aca.oop.graphics.Screen;
 import aca.oop.gui.Frame;
 import aca.oop.input.Keyboard;
+import aca.oop.level.Audio;
 
 public class Game extends Canvas {
 	
@@ -71,6 +72,7 @@ public class Game extends Canvas {
 		
 		screen = new Screen(WIDTH, HEIGHT);
 		input = new Keyboard();
+		Audio.playVictory();
 		addKeyListener(input);
 		board = new Board(this, input, screen);
 	}

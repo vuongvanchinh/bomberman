@@ -37,7 +37,7 @@ public class FileLevel extends Level {
 
    public void loadLevel(String path) throws LoadLevelException {
       try {// C:\Users\Dell\Desktop\bomberman\res\levels\Level1.txt
-         System.out.println(path);
+         //System.out.println(path);
          FileReader fr = new FileReader(path);
          BufferedReader in = new BufferedReader(fr);
          String data = in.readLine();
@@ -50,7 +50,7 @@ public class FileLevel extends Level {
 
          for (int i = 0; i < height; ++i) {
             lineTiles[i] = in.readLine().trim();
-            System.out.println(lineTiles[i]);
+            //System.out.println(lineTiles[i]);
          }
          in.close();
       } catch (IOException e) {
@@ -72,11 +72,11 @@ public class FileLevel extends Level {
 
    public void addLevelEntity(char c, int x, int y) {
       int pos = x + y * this.getWidth();
-      System.out.println("width" +this.getWidth());
-      System.out.println(this.getWidth());
+      //System.out.println("width" +this.getWidth());
+      //System.out.println(this.getWidth());
       switch(c) {
          case '#':
-            System.out.println("#");
+            //System.out.println("#");
             board.addEntities(pos, new Wall(x, y, Sprite.wall));
             break;
          case 'b':

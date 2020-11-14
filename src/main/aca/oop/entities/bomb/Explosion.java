@@ -64,8 +64,8 @@ public class Explosion extends Entity {
  
    public void render(Screen screen) {
       int xt = (int)this.x << 4;
-		int yt = (int)this.y << 4;
-		
+      int yt = (int)this.y << 4;
+      
 		screen.renderEntity(xt, yt , this);
    }
 

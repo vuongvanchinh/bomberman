@@ -77,7 +77,7 @@ public abstract class Enemy extends Mob {
 		if(direction == 3) {xa--;}
 		
       if (canMove(xa, ya)) {
-         steps -= 1 + rest;
+         steps -= (1 + rest);
          move(xa * speed, ya * speed);
          moving = true;
       } else {
@@ -132,9 +132,8 @@ public abstract class Enemy extends Mob {
 		int xx = Coordinates.pixelToTile(xr) +(int)x;
 		int yy = Coordinates.pixelToTile(yr) +(int)y;
 		
-		Entity a = board.getEntity(xx, yy, this); //entity of the position we want to go
-		
-		return a.collide(this);
+      Entity a = board.getEntity(xx, yy, this); //entity of the position we want to go
+      return a.collide(this);
    }
 
    
@@ -145,8 +144,9 @@ public abstract class Enemy extends Mob {
       }
 
       if (e instanceof Player) {
+         //System.out.println("toa do enemy: " + this.x + " " + this.y + "enemy.java");
          ((Player) e).kill();
-         return false;
+         return true;
       }
       return true;
    }

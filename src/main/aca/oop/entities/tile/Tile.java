@@ -16,7 +16,6 @@ public abstract class Tile extends Entity {
    public boolean collide(Entity e) {
       return false;
    }
-
    
    public void render(Screen screen) {
       screen.renderEntity(Coordinates.tileToPixel(this.x), Coordinates.tileToPixel(this.y) , this);

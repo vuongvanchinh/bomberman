@@ -8,7 +8,7 @@ import aca.oop.graphics.Sprite;
 public class Oneal extends Enemy {
 
    public Oneal(int x, int y, Board board) {
-      super(x, y, board, Sprite.oneal_dead, Game.getBombRadius(), 200);
+      super(x, y, board, Sprite.oneal_dead, Game.getPlayerSpeed() / 2, 200);
       this.sprite = Sprite.oneal_left1;
       ai = new AIMedium(board.getPlayer(), this);
       direction = ai.calculateDirection();
@@ -38,11 +38,4 @@ public class Oneal extends Enemy {
       }
 
    }
-
-   @Override
-   protected boolean canMove(double x, double y) {
-
-      return false;
-   }
-
 }

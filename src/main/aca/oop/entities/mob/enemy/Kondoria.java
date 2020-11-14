@@ -2,6 +2,7 @@ package aca.oop.entities.mob.enemy;
 
 import aca.oop.Board;
 import aca.oop.Game;
+import aca.oop.entities.mob.enemy.ai.AIMedium;
 import aca.oop.graphics.Sprite;
 
 public class Kondoria extends Enemy {
@@ -9,7 +10,8 @@ public class Kondoria extends Enemy {
    public Kondoria(int x, int y, Board board) {
       super(x, y, board, Sprite.kondoria_dead, Game.getPlayerSpeed() / 4, 1000);
       this.sprite = Sprite.kondoria_right1;
-
+      ai = new AIMedium(board.getPlayer(), this);
+      direction = ai.calculateDirection();
    }
 
    @Override

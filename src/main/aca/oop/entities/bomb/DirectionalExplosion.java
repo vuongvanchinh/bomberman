@@ -43,7 +43,6 @@ public class DirectionalExplosion extends Entity {
                break;
           }
           explosions[i] = new Explosion(x, y, direction, last, board);
-         
       }
    }
 
@@ -53,14 +52,6 @@ public class DirectionalExplosion extends Entity {
       int y = (int)this.y;
       
       while(lRadius < this.radius) {
-         // switch(direction) {
-         //    case 0: y--; break;
-         //    case 1: x++; break;
-         //    case 2: y++; break;
-         //    case 3: x--; break;
-         //    default:
-         //       break;
-         // }
          if(direction == 0) {y--;}
 			if(direction == 1) {x++;}
 			if(direction == 2) {y++;}

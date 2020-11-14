@@ -2,6 +2,7 @@ package aca.oop.entities.mob.enemy;
 
 import aca.oop.Board;
 import aca.oop.Game;
+import aca.oop.entities.mob.enemy.ai.AIMedium;
 import aca.oop.graphics.Sprite;
 
 public class Doll extends Enemy {
@@ -9,7 +10,8 @@ public class Doll extends Enemy {
    public Doll(int x, int y, Board board) {
       super(x, y, board, Sprite.doll_dead, Game.getPlayerSpeed() / 4, 1000);
       this.sprite = Sprite.doll_right1;
-
+      ai = new AIMedium(board.getPlayer(), this);
+      direction = ai.calculateDirection();
    }
 
    @Override

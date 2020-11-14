@@ -121,14 +121,10 @@ public class Board implements IRender {
 
       try {//res\levels\Level1.txt
          this.level = new FileLevel("res/levels/Level" + level + ".txt", this);
-         System.out.println("test 1");
          this.entities = new Entity[this.level.getHeight() * this.level.getWidth()];
-         System.out.println("test2");
          this.level.createEntities();
-         System.out.println("test3");
       } catch (LoadLevelException e) {
          endGame(); // no more level;
-         
       }
    }
 

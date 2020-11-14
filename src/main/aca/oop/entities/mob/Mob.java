@@ -80,6 +80,6 @@ public abstract class Mob extends AnimatedEntity {
    }
 
    protected double getYMessage() {
-      return (y * Game.SCALE) + (sprite.SIZE / 2 * Game.SCALE);
+      return (y * Game.SCALE) - (sprite.SIZE / 2 * Game.SCALE);
    }
 }

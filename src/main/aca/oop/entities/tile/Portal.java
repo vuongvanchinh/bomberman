@@ -4,6 +4,7 @@ import aca.oop.Board;
 import aca.oop.entities.Entity;
 import aca.oop.entities.Player;
 import aca.oop.graphics.Sprite;
+import aca.oop.level.Audio;
 
 public class Portal extends Tile {
 
@@ -19,11 +20,13 @@ public class Portal extends Tile {
 		
 		if(e instanceof Player ) {
 			
-			if (!board.detectNoEnemies())
+			if (!board.detectNoEnemies()) {
 				return false;
-			
+			}
+
 			if(e.getXTile() == getX() && e.getYTile() == getY() && board.detectNoEnemies()) {
-					board.nextLevel();
+				Audio.playVictory();
+				board.nextLevel();
 			}
 			
 			return true;

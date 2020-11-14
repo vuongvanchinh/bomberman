@@ -29,7 +29,7 @@ public class SpriteSheet {
 		try {
 			File a = new File(this.path);
 			BufferedImage image = ImageIO.read(a);
-			System.out.println("test Sprite sheet.");
+			//System.out.println("test Sprite sheet.");
 			int w = image.getWidth();
 			int h = image.getHeight();
 			image.getRGB(0, 0, w, h, pixels, 0, w);

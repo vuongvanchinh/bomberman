@@ -15,11 +15,45 @@ import aca.oop.entities.tile.item.Item;
 import aca.oop.graphics.Screen;
 import aca.oop.graphics.Sprite;
 import aca.oop.input.Keyboard;
+import aca.oop.level.Audio;
 import aca.oop.level.Coordinates;
 
 public class Player extends Mob {
 
    private List<Bomb> bombs;
+   private int timer = 5;
+
+   public List<Bomb> getBombs() {
+      return this.bombs;
+   }
+
+   public void setBombs(List<Bomb> bombs) {
+      this.bombs = bombs;
+   }
+
+   public int getTimer() {
+      return this.timer;
+   }
+
+   public void setTimer(int timer) {
+      this.timer = timer;
+   }
+
+   public Keyboard getInput() {
+      return this.input;
+   }
+
+   public void setInput(Keyboard input) {
+      this.input = input;
+   }
+
+   public int getTimeBetweenPutBombs() {
+      return this.timeBetweenPutBombs;
+   }
+
+   public void setTimeBetweenPutBombs(int timeBetweenPutBombs) {
+      this.timeBetweenPutBombs = timeBetweenPutBombs;
+   }
    protected Keyboard input;
    protected int timeBetweenPutBombs = 0;
 
@@ -30,7 +64,6 @@ public class Player extends Mob {
       bombs = board.getBombs();
       input = board.getInput();
       sprite = Sprite.player_right;
-
    }
 
    public void update() {
@@ -83,6 +116,7 @@ public class Player extends Mob {
    protected void placeBomb(int x, int y) {
       Bomb b = new Bomb(x, y, board);
       board.addBomb(b);
+      Audio.playPlaceBomb();
    }
 
    private void clearBombs() {
@@ -99,13 +133,16 @@ public class Player extends Mob {
 
    @Override
    public void kill() {
+     
       if (!alive) {
          return;
       }
+      System.out.println("Toa do xy:" + this.x + " " + this.y + "player.java");
       alive = false;
       board.addLives(-1);
       Message msg = new Message("- 1 LIVE", getXMessage(), getXMessage(), 4, Color.WHITE, 18);
       board.addMessage(msg);
+      Audio.bomberDie();
    }
 
    @Override
@@ -135,8 +172,12 @@ public class Player extends Mob {
          double yt = ((this.y + y) + c / 2 * 12 - 13) / Game.TILES_SIZE;
          //System.out.println(String.format("xt:%.1f, yt: %.1f", xt, yt));
          Entity a = board.getEntity(xt, yt, this);
-         if (!a.collide(this)) {
+         
+         if (a instanceof Enemy || a instanceof DirectionalExplosion) {
+            this.shifter(x, y);
+         }
 
+         if (!a.collide(this)) {
             return false;
          }
       }
@@ -151,14 +192,14 @@ public class Player extends Mob {
 		if(input.down) {ya++;}
 		if(input.left) {xa--;}
 		if(input.right) {xa++;}
-      System.out.println("calculate move in player.java" + (xa + ya));
+      //System.out.println("calculate move in player.java" + (xa + ya));
       if (xa != 0 || ya != 0) {
          move(xa * Game.getPlayerSpeed(), ya * Game.getPlayerSpeed());
          moving = true;
       } else {
          moving = false;
       }
-
+      timer--;
    }
 
    @Override
@@ -169,12 +210,19 @@ public class Player extends Mob {
       if (ya > 0) {direction = 2;}
       if (ya < 0) {direction = 0;}
 
-      if (canMove(0, ya)) {
+      boolean vertical = canMove(0, ya);
+      boolean horizontal = canMove(xa, 0);
+      if (vertical) {
          this.y += ya;
       }
 
-      if (canMove(xa, 0)) {
+      if (horizontal) {
          this.x += xa;
+      }
+
+      if (timer <= 0 && (horizontal || vertical)) {
+         Audio.playMenuMove();
+         timer = 35;
       }
    }
 
@@ -189,6 +237,7 @@ public class Player extends Mob {
          kill();
          return true;
       }
+
       return true;
    }
 
@@ -224,7 +273,7 @@ public class Player extends Mob {
          case 0:
             sprite = Sprite.player_up;
             if (moving) {
-               System.out.println("up sprite");
+               //System.out.println("up sprite");
                sprite = Sprite.movingSprite(Sprite.player_up_1, Sprite.player_up_2, animate, 20);
             }
             break;
