@@ -22,6 +22,7 @@ public abstract class Entity implements IRender {
 		return sprite;
 	}
 	
+	
 	public abstract boolean collide(Entity e);
 	
 	public double getX() {
@@ -32,7 +33,7 @@ public abstract class Entity implements IRender {
 		this.x += x;
 		this.y += y;
 	} 
-	
+
 	public double getY() {
 		return y;
 	}

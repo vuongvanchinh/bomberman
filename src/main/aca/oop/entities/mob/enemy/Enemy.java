@@ -12,6 +12,7 @@ import aca.oop.entities.mob.Mob;
 import aca.oop.entities.mob.enemy.ai.AI;
 import aca.oop.graphics.Screen;
 import aca.oop.graphics.Sprite;
+import aca.oop.level.Audio;
 import aca.oop.level.Coordinates;
 
 public abstract class Enemy extends Mob {
@@ -91,7 +92,7 @@ public abstract class Enemy extends Mob {
    protected void move(double xa, double ya) {
       if (!alive) return;
       this.x += xa;
-      this.y += ya; 
+      this.y += ya;
    }
 
    @Override
@@ -104,6 +105,7 @@ public abstract class Enemy extends Mob {
       }
       Message msg = new Message("+" + points, getXMessage(), getYMessage(), 4, Color.WHITE, 14);
       board.addMessage(msg);
+      Audio.playEntityDie();
    }
 
    @Override
@@ -124,15 +126,28 @@ public abstract class Enemy extends Mob {
       double xr = this.x;
       double yr = this.y - 16;
 
-      if(direction == 0) { yr += sprite.getSize() - 1 ; xr += sprite.getSize()/2; } 
-		if(direction == 1) {yr += sprite.getSize() / 2; xr += 1;}
-		if(direction == 2) { xr += sprite.getSize() / 2; yr += 1;}
-		if(direction == 3) { xr += sprite.getSize() -1; yr += sprite.getSize()/2;}
+      if(direction == 0) {
+         yr += sprite.getSize() - 1 ;
+         xr += sprite.getSize()/2;
+      } 
+		if(direction == 1) {
+         yr += sprite.getSize() / 2;
+         xr += 1;
+      }
+		if(direction == 2) {
+         xr += sprite.getSize() / 2;
+         yr += 1;
+      }
+		if(direction == 3) {
+         xr += sprite.getSize() -1;
+         yr += sprite.getSize()/2;
+      }
 		
 		int xx = Coordinates.pixelToTile(xr) +(int)x;
 		int yy = Coordinates.pixelToTile(yr) +(int)y;
 		
       Entity a = board.getEntity(xx, yy, this); //entity of the position we want to go
+
       return a.collide(this);
    }
 

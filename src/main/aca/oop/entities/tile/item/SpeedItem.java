@@ -4,6 +4,7 @@ import aca.oop.Game;
 import aca.oop.entities.Entity;
 import aca.oop.entities.Player;
 import aca.oop.graphics.Sprite;
+import aca.oop.level.Audio;
 
 public class SpeedItem extends Item {
    
@@ -17,6 +18,7 @@ public class SpeedItem extends Item {
       if (e instanceof Player) {
        ((Player) e).addItem(this);
          remove();
+         Audio.eat();
          return true;
       }
       return false;
@@ -25,6 +27,6 @@ public class SpeedItem extends Item {
    @Override
    public void setValues() {
       this.active = true;
-      Game.addPlayerSpeed(0.1);
+      Game.addPlayerSpeed(0.3);
    }
 }

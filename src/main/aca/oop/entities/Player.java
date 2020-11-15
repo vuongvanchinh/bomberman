@@ -175,6 +175,7 @@ public class Player extends Mob {
          
          if (a instanceof Enemy || a instanceof DirectionalExplosion) {
             this.shifter(x, y);
+            //return true;
          }
 
          if (!a.collide(this)) {
