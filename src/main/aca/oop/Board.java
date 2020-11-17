@@ -12,16 +12,20 @@ import java.util.Scanner;
 
 import aca.oop.entities.Entity;
 import aca.oop.entities.Message;
-import aca.oop.entities.Player;
+import aca.oop.entities.mob.Player;
+import aca.oop.entities.mob.enemy.Enemy;
 import aca.oop.entities.bomb.Bomb;
 import aca.oop.entities.bomb.Explosion;
 import aca.oop.entities.mob.Mob;
+import aca.oop.entities.tile.Grass;
 import aca.oop.entities.tile.item.Item;
 import aca.oop.exceptions.LoadLevelException;
 import aca.oop.graphics.IRender;
 import aca.oop.graphics.Screen;
+import aca.oop.graphics.Sprite;
 import aca.oop.input.Keyboard;
 import aca.oop.level.Level;
+import aca.oop.level.Coordinates;
 import aca.oop.level.FileLevel;
 
 public class Board implements IRender {
@@ -31,6 +35,7 @@ public class Board implements IRender {
    protected Level level;
    protected Keyboard input;
    protected Screen screen;
+
 
    public List<Mob> mobs = new ArrayList<Mob>();
 	protected List<Bomb> bombs = new ArrayList<Bomb>();
@@ -50,7 +55,7 @@ public class Board implements IRender {
       this.input = input;
       this.screen = screen;
       this.record = getRecord(true);
-      changeLevel(1); 
+      changeLevel(3); 
    }
 
   /**
@@ -67,7 +72,7 @@ public class Board implements IRender {
       updateBombs();
       updateMessages();
       detectEndGame();
-      input.update();
+      //input.update();
 
       int i = 0;
       while (i < mobs.size()) {
@@ -78,6 +83,7 @@ public class Board implements IRender {
             i++;
          }
       }
+
    }
 
    public void render(Screen screen) {
@@ -171,13 +177,13 @@ public class Board implements IRender {
    }
 
    public boolean detectNoEnemies() {
-      int total = 0;
+      boolean noBomb = bombs.isEmpty();
       for (int i = 0; i < mobs.size(); i++) {
          if (!(mobs.get(i) instanceof Player)) {
-            ++total;
+            return false;
          }
       }
-      return (total == 0) && bombs.isEmpty();
+      return noBomb;
    }
 
    public void gamePause() {
@@ -392,8 +398,9 @@ public class Board implements IRender {
 		Bomb b;
 		while(bs.hasNext()) {
 			b = bs.next();
-			if(b.getX() == (int)x && b.getY() == (int)y)
-				return b;
+			if(b.getXTile() == (int)x && b.getYTile() == (int)y) {
+            return b;
+         }
 		}
 		
 		return null;
@@ -411,8 +418,24 @@ public class Board implements IRender {
 		}
 		
 		return null;
-	}
-	
+   }
+   
+   public boolean killMobAround(Entity e) {
+      boolean killed = false;
+      Iterator<Mob> itr = mobs.iterator();
+		
+		Mob cur;
+		while(itr.hasNext()) {
+			cur = itr.next();
+			
+			if(cur.checkCollision(e)) {
+            cur.kill();
+            killed = true;
+         }
+      }
+      return killed;
+   }
+
 	public Player getPlayer() {
 		Iterator<Mob> itr = mobs.iterator();
 		
@@ -428,20 +451,25 @@ public class Board implements IRender {
 	}
 	
 	public Mob getMobAtExcluding(int x, int y, Mob a) {
-		Iterator<Mob> itr = mobs.iterator();
-		
+      Entity t = new Grass(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.grass);
+      Iterator<Mob> itr = mobs.iterator();
+      Mob result = null;
 		Mob cur;
 		while(itr.hasNext()) {
 			cur = itr.next();
 			if(cur == a) {
 				continue;
-			}
-			if(cur.getXTile() == x && cur.getYTile() == y) {
-				return cur;
+         }
+         Entity temp = getEntityAt(x, y);
+			if(temp instanceof Grass && cur.checkCollision(t)) {
+            //System.err.println("board.java: " + x + " " + y);
+            if (result != null) {
+               cur.kill();
+            } else { result = cur;}
 			}
 		}
 		
-		return null;
+		return result;
 	}
 	
 	public Explosion getExplosionAt(int x, int y) {
@@ -484,9 +512,8 @@ public class Board implements IRender {
 	
 	public void addMessage(Message e) {
 		messages.add(e);
-	}
-	
-	/*
+   }
+    /*
 	|--------------------------------------------------------------------------
 	| Renders
 	|--------------------------------------------------------------------------
@@ -530,15 +557,15 @@ public class Board implements IRender {
 		if(game.isPaused() ) return;
 		for (int i = 0; i < entities.length; i++) {
 			entities[i].update();
-		}
+      }
 	}
 	
 	protected void updateMobs() {
-		if(game.isPaused() ) return;
-		Iterator<Mob> itr = mobs.iterator();
-		
+      if(game.isPaused() ) return;
+      Iterator<Mob> itr = mobs.iterator();
+      
 		while(itr.hasNext() && !game.isPaused())
-			itr.next().update();
+         itr.next().update();
 	}
 	
 	protected void updateBombs() {
@@ -567,6 +594,4 @@ public class Board implements IRender {
       }
       
 	}
-
-   
 }

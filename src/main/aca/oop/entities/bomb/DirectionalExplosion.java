@@ -4,6 +4,7 @@ import aca.oop.Board;
 import aca.oop.entities.Entity;
 import aca.oop.entities.mob.Mob;
 import aca.oop.graphics.Screen;
+import aca.oop.level.Coordinates;
 
 public class DirectionalExplosion extends Entity {
 
@@ -29,49 +30,48 @@ public class DirectionalExplosion extends Entity {
 
    private void createExplosions() {
       boolean last = false;
-      int x = (int)this.x;
-      int y = (int)this.y;
-
+      int xt = Coordinates.pixelToTile(this.x);
+      int yt= Coordinates.pixelToTile(this.y);
       for (int i = 0; i <explosions.length; i ++) {
           last = (i == explosions.length - 1);//? true : false;
           switch(direction) {
-            case 0: y--; break;
-            case 1: x++; break;
-            case 2: y++; break;
-            case 3: x--; break;
+            case 0: yt--; break;
+            case 1: xt++; break;
+            case 2: yt++; break;
+            case 3: xt--; break;
             default: 
                break;
           }
-          explosions[i] = new Explosion(x, y, direction, last, board);
+          explosions[i] = new Explosion(Coordinates.tileToPixel(xt), Coordinates.tileToPixel(yt), direction, last, board);
       }
    }
 
    private int calculatePermitDistance() {
       int lRadius = 0;
-      int x = (int)this.x;
-      int y = (int)this.y;
-      
+      int xt = Coordinates.pixelToTile(this.x);
+      int yt = Coordinates.pixelToTile(this.y);
       while(lRadius < this.radius) {
-         if(direction == 0) {y--;}
-			if(direction == 1) {x++;}
-			if(direction == 2) {y++;}
-         if(direction == 3) {x--;}
+         if(direction == 0) {yt--;}
+			if(direction == 1) {xt++;}
+			if(direction == 2) {yt++;}
+         if(direction == 3) {xt--;}
          
-         Entity a = board.getEntity(x, y, null);
-
-         if (a instanceof Mob) ++lRadius; //explosion has to be below the mob
+         
+         Entity a = board.getEntity(xt, yt, null);
+         //System.out.println(a.getClass() + " " + xt + " " + yt);
+         if (a instanceof Mob) lRadius++; //explosion has to be below the mob
 
          if (!a.collide(this)) { // cannot pass thru
             break;
          }
-         ++lRadius;
+         lRadius++;
       }
       return lRadius;
    }
 
    public Explosion explosionAt(int x, int y) {
       for (int i = 0; i < explosions.length; i++) {
-         if (explosions[i].getX() == x && explosions[i].getY() == y) {
+         if (explosions[i].getXTile() == x && explosions[i].getYTile() == y) {
             return explosions[i];
          }
       }
@@ -91,7 +91,6 @@ public class DirectionalExplosion extends Entity {
 
    @Override
    public boolean collide(Entity e) {
-      
       return true;
    }
    
@@ -104,4 +103,11 @@ public class DirectionalExplosion extends Entity {
       this.radius = radius;
    }
 
+   // @Override
+   // public boolean checkCollision(Entity e) {
+   //    for (int i = 0; i < this.explosions.length; i++) {
+   //       if (explosions[i].checkCollision(e)) {return true;}
+   //    }
+   //    return false;   
+   // }
 }

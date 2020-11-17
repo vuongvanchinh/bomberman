@@ -1,6 +1,6 @@
 package aca.oop.entities.mob.enemy.ai;
 
-import aca.oop.entities.Player;
+import aca.oop.entities.mob.Player;
 import aca.oop.entities.mob.enemy.Enemy;
 
 public class AIMedium extends AI {

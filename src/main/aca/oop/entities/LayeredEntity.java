@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import aca.oop.entities.tile.destroyable.DestroyableTile;
 import aca.oop.graphics.Screen;
+import aca.oop.graphics.Sprite;
 
 public class LayeredEntity extends Entity {
 
@@ -12,6 +13,7 @@ public class LayeredEntity extends Entity {
    public LayeredEntity(int x, int y, Entity... entities) {
       this.x = x;
       this.y = y;
+      this.sprite = Sprite.grass;
       for (int i = 0; i < entities.length; i++) {
          this.entities.add(entities[i]);
 
@@ -26,7 +28,6 @@ public class LayeredEntity extends Entity {
       getTopEntity().update();
 
    }
-
 
    public void render(Screen screen) {
       getTopEntity().render(screen);

@@ -3,7 +3,6 @@ package aca.oop.entities.tile;
 import aca.oop.entities.Entity;
 import aca.oop.graphics.Screen;
 import aca.oop.graphics.Sprite;
-import aca.oop.level.Coordinates;
 
 public abstract class Tile extends Entity {
 
@@ -18,7 +17,7 @@ public abstract class Tile extends Entity {
    }
    
    public void render(Screen screen) {
-      screen.renderEntity(Coordinates.tileToPixel(this.x), Coordinates.tileToPixel(this.y) , this);
+      screen.renderEntity((int)this.x, (int)this.y, this);
    }
 
    

@@ -40,7 +40,7 @@ public class Game extends Canvas {
 	
 	public static final int TIME = 200;
 	public static final int POINTS = 0;
-	public static final int LIVES = 3;
+	public static final int LIVES = 100;
 	
 	protected static final int SCREEN_DELAY = 3;
 	

@@ -4,14 +4,13 @@ import aca.oop.entities.Entity;
 import aca.oop.entities.bomb.DirectionalExplosion;
 import aca.oop.entities.mob.enemy.Kondoria;
 import aca.oop.graphics.Screen;
-import aca.oop.level.Coordinates;
+//import aca.oop.level.Coordinates;
 import aca.oop.graphics.Sprite;
 
 public class Brick extends DestroyableTile {
    
    public Brick(int x, int y, Sprite sprite) {
       super(x, y, sprite);
-
    }
 
    // @Override
@@ -21,14 +20,14 @@ public class Brick extends DestroyableTile {
 
    @Override
    public void render(Screen screen) {
-      int x = Coordinates.tileToPixel(this.x);
-      int y = Coordinates.tileToPixel(this.y);
+      // int x = Coordinates.tileToPixel(this.x);
+      // int y = Coordinates.tileToPixel(this.y);
 
       if (destroyed) {
          this.sprite = movingSprite(Sprite.brick_exploded, Sprite.brick_exploded1, Sprite.brick_exploded2);
-         screen.renderEntityWithBelowSprite(x, y, this, this.belowSprite);
+         screen.renderEntityWithBelowSprite((int)this.x, (int)this.y, this, this.belowSprite);
       } else {
-         screen.renderEntity(x, y, this);
+         screen.renderEntity((int)this.x, (int)this.y, this);
       }
    }
 
@@ -39,7 +38,7 @@ public class Brick extends DestroyableTile {
       } else if (e instanceof Kondoria) {
          return true;
       }
-      
+
       return false;
    }
 }

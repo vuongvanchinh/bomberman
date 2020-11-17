@@ -12,7 +12,7 @@ import java.util.StringTokenizer;
 import aca.oop.Board;
 import aca.oop.Game;
 import aca.oop.entities.LayeredEntity;
-import aca.oop.entities.Player;
+import aca.oop.entities.mob.Player;
 import aca.oop.entities.mob.enemy.Balloom;
 import aca.oop.entities.mob.enemy.Doll;
 import aca.oop.entities.mob.enemy.Kondoria;
@@ -72,93 +72,119 @@ public class FileLevel extends Level {
 
    public void addLevelEntity(char c, int x, int y) {
       int pos = x + y * this.getWidth();
-      //System.out.println("width" +this.getWidth());
-      //System.out.println(this.getWidth());
       switch(c) {
          case '#':
             //System.out.println("#");
-            board.addEntities(pos, new Wall(x, y, Sprite.wall));
+            board.addEntities(pos, new Wall(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.wall));
             break;
          case 'b':
-            LayeredEntity layer = new LayeredEntity(x, y, 
-                  new Grass(x, y, Sprite.grass),
-                  new Brick(x, y, Sprite.brick)
+            LayeredEntity layer = new LayeredEntity(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), 
+                  new Grass(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.grass),
+                  new Brick(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.brick)
                   );
-            if (!this.board.isItemUsed(x, y, thLevel)) {
-               layer.addBeforeTop(new BombItem(x, y, thLevel,  Sprite.powerup_bombs));
+            if (!this.board.isItemUsed(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), thLevel)) {
+               layer.addBeforeTop(new BombItem(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), thLevel,  Sprite.powerup_bombs));
             }
             board.addEntities(pos, layer);
             break;
          case 's':
-            layer = new LayeredEntity(x, y, 
-               new Grass(x ,y, Sprite.grass), 
-               new Brick(x ,y, Sprite.brick));
+            layer = new LayeredEntity(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), 
+               new Grass(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.grass), 
+               new Brick(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.brick)
+               );
 
-            if (!this.board.isItemUsed(x, y, thLevel)) {
-               layer.addBeforeTop(new SpeedItem(x, y, thLevel,  Sprite.powerup_speed));
+            if (!this.board.isItemUsed(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), thLevel)) {
+               layer.addBeforeTop(new SpeedItem(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), thLevel,  Sprite.powerup_speed));
             }
 
             board.addEntities(pos, layer);
             break;
          case 'f':
-            layer = new LayeredEntity(x, y, 
-               new Grass(x ,y, Sprite.grass), 
-               new Brick(x ,y, Sprite.brick));
+            layer = new LayeredEntity(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), 
+               new Grass(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.grass), 
+               new Brick(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.brick));
 
-            if (!this.board.isItemUsed(x, y, thLevel)) {
-               layer.addBeforeTop(new FlameItem(x, y, thLevel,  Sprite.powerup_flames));
+            if (!this.board.isItemUsed(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), thLevel)) {
+               layer.addBeforeTop(new FlameItem(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), thLevel,  Sprite.powerup_flames));
             }
             board.addEntities(pos, layer);
             break;
          case '*':
-            board.addEntities(pos, new LayeredEntity(x, y, 
-               new Grass(x, y, Sprite.grass),
-               new Brick(x, y, Sprite.brick)
+            board.addEntities(pos, new LayeredEntity(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), 
+               new Grass(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.grass),
+               new Brick(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.brick)
             ));
             
             break;
          case 'x':
-            board.addEntities(pos, new LayeredEntity(x, y, 
-               new Grass(x, y, Sprite.grass),
-               new Portal(x, y, this.board, Sprite.portal),
-               new Brick(x, y, Sprite.brick)));
+            board.addEntities(pos, new LayeredEntity(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), 
+               new Grass(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.grass),
+               new Portal(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), this.board, Sprite.portal),
+               new Brick(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.brick)));
             break;
          case ' ':
-            board.addEntities(pos, new Grass(x, y, Sprite.grass));
+            board.addEntities(pos, new Grass(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.grass));
             break;
          case 'p':
             board.addMob(new Player(
-               Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, board));
+               Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) , board));
             Screen.setOffset(0,0);
-            board.addEntities(pos, new Grass(x, y, Sprite.grass));
+            board.addEntities(pos, new Grass(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.grass));
             break;
          case '1':
             board.addMob(new Balloom(
-               Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, board));
-            board.addEntities(pos, new Grass(x, y, Sprite.grass));
+               Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) , board));
+            board.addEntities(pos, new Grass(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.grass));
             break;
          case '2':
             board.addMob(new Oneal(
-               Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, board));
-            board.addEntities(pos, new Grass(x, y, Sprite.grass));
+               Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) , board));
+            board.addEntities(pos, new Grass(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.grass));
          break;
          case '3':
             board.addMob(new Doll(
-               Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, board));
-               board.addEntities(pos, new Grass(x, y, Sprite.grass));
+               Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) , board));
+               board.addEntities(pos, new Grass(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.grass));
             break;
          case '4':
          board.addMob(new Minvo(
-            Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, board));
-            board.addEntities(pos, new Grass(x, y, Sprite.grass));
+            Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) , board));
+            board.addEntities(pos, new Grass(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.grass));
          break;
          case '5':
             board.addMob(new Kondoria(
-               Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, board));
-               board.addEntities(pos, new Grass(x, y, Sprite.grass));
+               Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) , board));
+               board.addEntities(pos, new Grass(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.grass));
             break;
          default:
-            board.addEntities(pos, new Grass(x, y, Sprite.grass));
+            board.addEntities(pos, new Grass(
+						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.grass));
             break;
       }
    }

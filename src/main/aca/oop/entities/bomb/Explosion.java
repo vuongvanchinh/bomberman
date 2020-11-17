@@ -6,12 +6,13 @@ import aca.oop.entities.Entity;
 import aca.oop.entities.mob.Mob;
 import aca.oop.graphics.Screen;
 import aca.oop.graphics.Sprite;
+import aca.oop.level.Coordinates;
 
 public class Explosion extends Entity {
    protected boolean last = false;
    protected Board board;
-   protected Sprite sprite1;
-   protected Sprite sprite2;
+   // protected Sprite sprite1;
+   // protected Sprite sprite2;
    
    public Explosion(int x, int y, int direction, boolean last, Board board) {
       this.x = x;
@@ -63,19 +64,17 @@ public class Explosion extends Entity {
 
  
    public void render(Screen screen) {
-      int xt = (int)this.x << 4;
-      int yt = (int)this.y << 4;
-      
+      int xt = (int)this.x;
+      int yt = (int)this.y;
 		screen.renderEntity(xt, yt , this);
    }
 
    @Override
    public boolean collide(Entity e) {
+      System.out.println("Hello Explosion.java");
       if(e instanceof Mob) {
-         System.out.println("kill");
 			((Mob)e).kill();
 		}
 		return true;
    }
-
 }

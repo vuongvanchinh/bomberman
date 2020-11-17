@@ -6,7 +6,7 @@ import aca.oop.Board;
 import aca.oop.Game;
 import aca.oop.entities.Entity;
 import aca.oop.entities.Message;
-import aca.oop.entities.Player;
+import aca.oop.entities.mob.Player;
 import aca.oop.entities.bomb.DirectionalExplosion;
 import aca.oop.entities.mob.Mob;
 import aca.oop.entities.mob.enemy.ai.AI;
@@ -59,7 +59,7 @@ public abstract class Enemy extends Mob {
                   Sprite.mob_dead1, Sprite.mob_dead2, Sprite.mob_dead3, animate, 60);
          }
       }
-      screen.renderEntity((int)this.x, (int)this.y - sprite.SIZE, this);
+      screen.renderEntity((int)this.x, (int)this.y, this);
    }
 
    protected abstract void chooseSprite();
@@ -77,7 +77,7 @@ public abstract class Enemy extends Mob {
 		if(direction == 2) {ya++;}
 		if(direction == 3) {xa--;}
 		
-      if (canMove(xa, ya)) {
+      if (canMove(xa *  speed, ya * speed)) {
          steps -= (1 + rest);
          move(xa * speed, ya * speed);
          moving = true;
@@ -98,6 +98,7 @@ public abstract class Enemy extends Mob {
    @Override
    public void kill() {
       if (!alive) return;
+
       alive = false;
       board.addPoints(points);
       if (board.getPoints() > board.getRecord(false)) {
@@ -123,46 +124,67 @@ public abstract class Enemy extends Mob {
 
    @Override
    protected boolean canMove(double x, double y) {
-      double xr = this.x;
-      double yr = this.y - 16;
+      // double xr = this.x;
+      // double yr = this.y - 16;
 
-      if(direction == 0) {
-         yr += sprite.getSize() - 1 ;
-         xr += sprite.getSize()/2;
-      } 
-		if(direction == 1) {
-         yr += sprite.getSize() / 2;
-         xr += 1;
-      }
-		if(direction == 2) {
-         xr += sprite.getSize() / 2;
-         yr += 1;
-      }
-		if(direction == 3) {
-         xr += sprite.getSize() -1;
-         yr += sprite.getSize()/2;
-      }
+      // if(direction == 0) {
+      //    yr += sprite.getSize() - 1 ;
+      //    xr += sprite.getSize()/2;
+      // } 
+		// if(direction == 1) {
+      //    yr += sprite.getSize() / 2;
+      //    xr += 1;
+      // }
+		// if(direction == 2) {
+      //    xr += sprite.getSize() / 2;
+      //    yr += 1;
+      // }
+		// if(direction == 3) {
+      //    xr += sprite.getSize() -1;
+      //    yr += sprite.getSize()/2;
+      // }
 		
-		int xx = Coordinates.pixelToTile(xr) +(int)x;
-		int yy = Coordinates.pixelToTile(yr) +(int)y;
+		// int xx = Coordinates.pixelToTile(xr) +(int)x;
+		// int yy = Coordinates.pixelToTile(yr) +(int)y;
 		
-      Entity a = board.getEntity(xx, yy, this); //entity of the position we want to go
+      // Entity a = board.getEntity(xx, yy, this); //entity of the position we want to go
 
-      return a.collide(this);
+      // return a.collide(this);
+      int xt = Coordinates.pixelToTile(this.x + x);
+      int yt = Coordinates.pixelToTile(this.y + y);
+      int aroundX = Coordinates.pixelToTile(this.x + x + 15) - xt;
+      int aroundY = Coordinates.pixelToTile(this.y + y + 15) - yt;
+     
+      for (int i = 0; i <= aroundX; i++) {
+         for (int j = 0; j <= aroundY; j++) {
+            Entity a = board.getEntity(xt + i, yt + j, this);
+            //System.out.println(a.getClass() + " " + xt + " " + yt);
+            if (!a.collide(this)) {
+               return false;
+            }
+         }
+      }
+      return true;
    }
 
    
    public boolean collide(Entity e) {
+      if (e instanceof Enemy) {
+         return false;
+      }
+
       if (e instanceof DirectionalExplosion) {
          kill();
          return false;
       }
 
       if (e instanceof Player) {
-         //System.out.println("toa do enemy: " + this.x + " " + this.y + "enemy.java");
-         ((Player) e).kill();
+         if (this.checkCollision(e)) {
+            ((Player) e).kill();
+         }
          return true;
       }
+
       return true;
    }
 }

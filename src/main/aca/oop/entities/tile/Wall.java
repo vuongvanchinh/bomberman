@@ -1,6 +1,5 @@
 package aca.oop.entities.tile;
 
-import aca.oop.entities.Entity;
 import aca.oop.graphics.Sprite;
 
 public class Wall extends Tile {

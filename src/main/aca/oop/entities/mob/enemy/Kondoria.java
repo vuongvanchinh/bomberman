@@ -41,10 +41,10 @@ public class Kondoria extends Enemy {
 
    }
 
-   @Override
-   protected boolean canMove(double x, double y) {
+   // @Override
+   // protected boolean canMove(double x, double y) {
       
-      return false;
-   }
+   //    return false;
+   // }
 
 }

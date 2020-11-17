@@ -10,7 +10,7 @@ public abstract class Mob extends AnimatedEntity {
    protected boolean alive = true;
    protected boolean moving = false;
    public int timeAfter = 80;
-
+  
    protected Mob(int x, int y, Board board) {
       this.x = x;
       this.y = y;

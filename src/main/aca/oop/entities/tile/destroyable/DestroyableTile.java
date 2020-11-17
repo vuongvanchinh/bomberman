@@ -35,6 +35,7 @@ public class DestroyableTile extends Tile {
    
    @Override
    public boolean collide(Entity e) {
+      if (e.checkCollision(this)) return true;
       if (e instanceof DirectionalExplosion) {
          destroy();
       }

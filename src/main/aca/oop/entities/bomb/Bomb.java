@@ -4,7 +4,8 @@ import aca.oop.Board;
 import aca.oop.Game;
 import aca.oop.entities.AnimatedEntity;
 import aca.oop.entities.Entity;
-import aca.oop.entities.Player;
+import aca.oop.entities.mob.Player;
+import aca.oop.entities.tile.Grass;
 import aca.oop.graphics.Screen;
 import aca.oop.graphics.Sprite;
 import aca.oop.level.Audio;
@@ -17,7 +18,7 @@ public class Bomb extends AnimatedEntity {
    public int timeAfter = 20;
    protected Board board;
    protected boolean allowedToPassThru = true;
-   protected DirectionalExplosion[] explosions = null;
+   protected DirectionalExplosion[] dExplosions = null;
    protected boolean exploded = false;
 
    public Bomb(int x, int y, Board board) {
@@ -28,6 +29,9 @@ public class Bomb extends AnimatedEntity {
    }
 
    public void update() {
+      if (allowedToPassThru && !board.getPlayer().checkCollision(new Grass((int)x, (int)y, Sprite.grass))) {
+         allowedToPassThru = false;
+      }
       if(timeToExplode > 0) {
          timeToExplode--;
       } else {
@@ -50,21 +54,21 @@ public class Bomb extends AnimatedEntity {
 		} else
 			 sprite = Sprite.movingSprite(Sprite.bomb, Sprite.bomb_1, Sprite.bomb_2, animate, 60);
 		
-		int xt = (int)x << 4;
-		int yt = (int)y << 4;
+		// int xt = (int)x << 4;
+		// int yt = (int)y << 4;
 		
-		screen.renderEntity(xt, yt , this);
+		screen.renderEntity((int)x, (int)y, this);
    }
 
    public void renderExplosions(Screen screen) {
-      for (int i = 0; i < explosions.length; i++) {
-         explosions[i].render(screen);
+      for (int i = 0; i < dExplosions.length; i++) {
+         dExplosions[i].render(screen);
       }
    }
 
    public void updateExplosions() {
-      for (int i = 0; i < explosions.length; i++) {
-			explosions[i].update();
+      for (int i = 0; i < dExplosions.length; i++) {
+			dExplosions[i].update();
 		}
    }
 
@@ -75,15 +79,16 @@ public class Bomb extends AnimatedEntity {
    protected void explosion() {
       allowedToPassThru = true;
       exploded = true;
-      Mob a = board.getMobAt(this.x, this.y);
-      if (a != null) {
-         a.kill();
-      }
+      // Mob a = board.getMobAt(Coordinates.pixelToTile(this.x), Coordinates.pixelToTile(this.y));
+      // if (a != null) {
+      //    a.kill();
+      // }
+      board.killMobAround(this);
 
-      explosions = new DirectionalExplosion[4];
+      dExplosions = new DirectionalExplosion[4];
 
-      for (int i = 0; i < explosions.length; i++) {
-         explosions[i] = new DirectionalExplosion((int)this.x, (int)this.y, i, Game.getBombRadius(), board);
+      for (int i = 0; i < dExplosions.length; i++) {
+         dExplosions[i] = new DirectionalExplosion((int)this.x, (int)this.y, i, Game.getBombRadius(), board);
       }
       Audio.playBombExplode();
    }
@@ -91,9 +96,9 @@ public class Bomb extends AnimatedEntity {
    public Explosion explosionAt(int x, int y) {
 		if(!exploded) return null;
 		
-		for (int i = 0; i < explosions.length; i++) {
-			if(explosions[i] == null) return null;
-			Explosion e = explosions[i].explosionAt(x, y);
+		for (int i = 0; i < dExplosions.length; i++) {
+			if(dExplosions[i] == null) return null;
+			Explosion e = dExplosions[i].explosionAt(x, y);
 			if(e != null) return e;
 		}
 		
@@ -103,12 +108,6 @@ public class Bomb extends AnimatedEntity {
    @Override
    public boolean collide(Entity e) {
       if (e instanceof Player) {
-         double diffX = e.getX() - Coordinates.tileToPixel(this.getX());
-         double diffY = e.getY() - Coordinates.tileToPixel(this.getY());
-
-         if (!(diffX >= -10 && diffX < 16 && diffY >= 1 && diffX <= 28)) {
-            allowedToPassThru = false;
-         }
          return allowedToPassThru;
       }
 

@@ -1,4 +1,4 @@
-package aca.oop.entities;
+package aca.oop.entities.mob;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -7,10 +7,13 @@ import java.util.List;
 
 import aca.oop.Board;
 import aca.oop.Game;
+import aca.oop.entities.Entity;
+import aca.oop.entities.Message;
 import aca.oop.entities.bomb.Bomb;
 import aca.oop.entities.bomb.DirectionalExplosion;
-import aca.oop.entities.mob.Mob;
+import aca.oop.entities.bomb.Explosion;
 import aca.oop.entities.mob.enemy.Enemy;
+import aca.oop.entities.tile.Wall;
 import aca.oop.entities.tile.item.Item;
 import aca.oop.graphics.Screen;
 import aca.oop.graphics.Sprite;
@@ -89,12 +92,11 @@ public class Player extends Mob {
       } else {
          sprite = Sprite.player_dead1;
       }
-      screen.renderEntity((int)x, (int)y - sprite.SIZE, this);
+      screen.renderEntity((int)x, (int)y, this);
    }
 
    public void calculateXOffset() {
       int xScroll = Screen.calculateXOffset(board, this);
-      //System.out.println("x scroll<player.calculateXOffset> : " + xScroll);
       Screen.setOffset(xScroll, 0);
    }
 
@@ -104,9 +106,8 @@ public class Player extends Mob {
    
    private void detectPlaceBomb()  {
       if (input.space && Game.getBombRate() > 0 && timeBetweenPutBombs < 0) {
-         int xt = Coordinates.pixelToTile(x + sprite.getSize() / 2);
-         //subtract half player height and minus 1 y position
-         int yt = Coordinates.pixelToTile((y + sprite.getSize() / 2) - sprite.getSize());
+         int xt = Coordinates.pixelToTile(x + sprite.getSize() / 2) << 4; // multiply 16;
+         int yt = Coordinates.pixelToTile((y + sprite.getSize() / 2)) << 4;
          placeBomb(xt, yt);
          Game.addBombRate(-1);
          timeBetweenPutBombs = 30;
@@ -137,7 +138,6 @@ public class Player extends Mob {
       if (!alive) {
          return;
       }
-      System.out.println("Toa do xy:" + this.x + " " + this.y + "player.java");
       alive = false;
       board.addLives(-1);
       Message msg = new Message("- 1 LIVE", getXMessage(), getXMessage(), 4, Color.WHITE, 18);
@@ -167,21 +167,31 @@ public class Player extends Mob {
     */
    @Override
    protected boolean canMove(double x, double y) {
-      for (int c = 0; c < 4; c++) { // four corner of the player.
-         double xt = ((this.x + x) + c % 2 * 11) / Game.TILES_SIZE;
-         double yt = ((this.y + y) + c / 2 * 12 - 13) / Game.TILES_SIZE;
-         //System.out.println(String.format("xt:%.1f, yt: %.1f", xt, yt));
-         Entity a = board.getEntity(xt, yt, this);
-         
-         if (a instanceof Enemy || a instanceof DirectionalExplosion) {
-            this.shifter(x, y);
-            //return true;
-         }
+       //System.out.println("around x" + aroundX + "aroundY" + aroundY);
+      // for (int c = 0; c < 4; c++) { // four corner of the player.
+      //    double xt = ((this.x + x) + c % 2 * 11) / Game.TILES_SIZE;
+      //    double yt = ((this.y + y) + c / 2 * 12 - 13) / Game.TILES_SIZE;
+      //    //System.out.println(String.format("xt:%.1f, yt: %.1f", xt, yt));
+      //    Entity a = board.getEntity(xt, yt, this);
 
-         if (!a.collide(this)) {
-            return false;
+      //    if (!a.collide(this)) {
+      //       return false;
+      //    }
+      // }
+      int xt = Coordinates.pixelToTile(this.x + x);
+      int yt = Coordinates.pixelToTile(this.y + y + 2);
+      int aroundX = Coordinates.pixelToTile(this.x + x + 11) - xt;
+      int aroundY = Coordinates.pixelToTile(this.y + y + 14) - yt;
+     
+      for (int i = 0; i <= aroundX; i++) {
+         for (int j = 0; j <= aroundY; j++) {
+            Entity a = board.getEntity(xt + i, yt + j, this);
+            if (!a.collide(this)) {
+               return false;
+            }
          }
       }
+
       return true;
    }
    
@@ -234,11 +244,11 @@ public class Player extends Mob {
          return false;
       }
 
-      if (e instanceof Enemy) {
+      if (e instanceof Enemy && this.checkCollision(e)) {
          kill();
          return true;
       }
-
+     
       return true;
    }
 
@@ -274,7 +284,6 @@ public class Player extends Mob {
          case 0:
             sprite = Sprite.player_up;
             if (moving) {
-               //System.out.println("up sprite");
                sprite = Sprite.movingSprite(Sprite.player_up_1, Sprite.player_up_2, animate, 20);
             }
             break;
@@ -299,4 +308,5 @@ public class Player extends Mob {
             break;
       }
    }
+
 }

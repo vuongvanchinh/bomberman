@@ -8,7 +8,7 @@ import java.awt.Graphics;
 import aca.oop.Board;
 import aca.oop.Game;
 import aca.oop.entities.Entity;
-import aca.oop.entities.Player;
+import aca.oop.entities.mob.Player;
 
 public class Screen {
    protected int width;

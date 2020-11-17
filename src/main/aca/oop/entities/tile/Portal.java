@@ -2,7 +2,7 @@ package aca.oop.entities.tile;
 
 import aca.oop.Board;
 import aca.oop.entities.Entity;
-import aca.oop.entities.Player;
+import aca.oop.entities.mob.Player;
 import aca.oop.graphics.Sprite;
 import aca.oop.level.Audio;
 
@@ -17,14 +17,13 @@ public class Portal extends Tile {
    
    @Override
 	public boolean collide(Entity e) {
-		
 		if(e instanceof Player ) {
 			
 			if (!board.detectNoEnemies()) {
 				return false;
 			}
 
-			if(e.getXTile() == getX() && e.getYTile() == getY() && board.detectNoEnemies()) {
+			if(this.checkCollision(e)) {//e.getXTile() == getXTile() && e.getYTile() == getYTile()
 				Audio.playVictory();
 				board.nextLevel();
 			}
