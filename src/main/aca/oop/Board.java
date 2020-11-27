@@ -72,7 +72,6 @@ public class Board implements IRender {
       updateBombs();
       updateMessages();
       detectEndGame();
-      //input.update();
 
       int i = 0;
       while (i < mobs.size()) {
@@ -163,6 +162,7 @@ public class Board implements IRender {
    */
    protected void detectEndGame() {
       if (time <= 0) {
+         getPlayer().resetBombProperties();
          restartLevel();
       }
    }
@@ -175,13 +175,12 @@ public class Board implements IRender {
    }
 
    public boolean detectNoEnemies() {
-      boolean noBomb = bombs.isEmpty();
       for (int i = 0; i < mobs.size(); i++) {
          if (!(mobs.get(i) instanceof Player)) {
             return false;
          }
       }
-      return noBomb;
+      return true;
    }
 
    public void gamePause() {
@@ -426,7 +425,7 @@ public class Board implements IRender {
 		while(itr.hasNext()) {
 			cur = itr.next();
 			
-			if(cur.checkCollision(e ,2)) {
+			if(cur.checkCollision(e ,4)) {
             cur.kill();
             killed = true;
          }

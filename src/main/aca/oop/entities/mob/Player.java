@@ -25,6 +25,10 @@ public class Player extends Mob {
 
    private List<Bomb> bombs;
    private int timer = 5;
+   protected Keyboard input;
+   protected int timeBetweenPutBombs = 0;
+
+   public static List<Item> items = new ArrayList<Item>();
 
    public List<Bomb> getBombs() {
       return this.bombs;
@@ -57,10 +61,6 @@ public class Player extends Mob {
    public void setTimeBetweenPutBombs(int timeBetweenPutBombs) {
       this.timeBetweenPutBombs = timeBetweenPutBombs;
    }
-   protected Keyboard input;
-   protected int timeBetweenPutBombs = 0;
-
-   public static List<Item> items = new ArrayList<Item>();
 
    public Player(int x, int y, Board board) {
       super(x, y, board);
@@ -236,7 +236,7 @@ public class Player extends Mob {
          timer = 35;
       }
    }
-
+   
    @Override
    public boolean collide(Entity e) {
       if (e instanceof DirectionalExplosion) {
@@ -273,6 +273,11 @@ public class Player extends Mob {
 
    public void removeItems() {
       items.clear();
+   }
+
+   public void resetBombProperties(){
+      timeBetweenPutBombs = 0;
+      Game.addBombRate(bombs.size());
    }
 
    /**void 

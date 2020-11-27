@@ -23,7 +23,7 @@ public class Game extends Canvas {
 	 * Options & Configs
 	 * |--------------------------------------------------------------------------
 	 */
-	public static final double VERSION = 1.9;
+	public static final String VERSION = "ACA";
 	
 	public static final int TILES_SIZE = 16;
 	public static final int	WIDTH = TILES_SIZE * (31 / 2); //minus one to ajust the window,
@@ -219,6 +219,9 @@ public class Game extends Canvas {
 		bombRate += i;
 	}
 	
+	public static void setBombRate(int i) {
+		bombRate = i;
+	}
 	//screen delay
 	public int getScreenDelay() {
 		return screenDelay;
