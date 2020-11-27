@@ -55,7 +55,7 @@ public class Board implements IRender {
       this.input = input;
       this.screen = screen;
       this.record = getRecord(true);
-      changeLevel(2);
+      changeLevel(3);
    }
 
   /**
@@ -429,7 +429,7 @@ public class Board implements IRender {
 		while(itr.hasNext()) {
 			cur = itr.next();
 			
-			if(cur.checkCollision(e)) {
+			if(cur.checkCollision(e ,1)) {
             cur.kill();
             killed = true;
          }

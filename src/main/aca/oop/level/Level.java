@@ -11,23 +11,12 @@ public abstract class Level implements ILevel {
    protected String[] lineTiles;
    protected Board board;
 
-   protected static String[] codes = { //TO DO: change this code system to actualy load the code from each level.txt
-		"level1",
-      "level2",
-      "level3",
-      "level4",
-      "level5",
-	};
-
    protected Level(String path, Board board) throws LoadLevelException {
       loadLevel(path);
       this.board = board;
    }
-
-   //public abstract void loadLevel(String path) throws LoadLevelException;
    
    public abstract void createEntities();
-   
 
    public int getWidth() {
       return this.width;
@@ -53,7 +42,4 @@ public abstract class Level implements ILevel {
       this.thLevel = level;
    }
 
-   public String getActualCode() {
-      return codes[this.thLevel -1];
-   } 
 }

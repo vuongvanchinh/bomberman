@@ -175,7 +175,6 @@ public abstract class Enemy extends Mob {
       if (e instanceof Enemy) {
          //backForward();
          return false;
-         
       }
 
       if (e instanceof DirectionalExplosion) {
