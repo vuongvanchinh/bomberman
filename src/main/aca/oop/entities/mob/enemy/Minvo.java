@@ -2,15 +2,15 @@ package aca.oop.entities.mob.enemy;
 
 import aca.oop.Board;
 import aca.oop.Game;
-import aca.oop.entities.mob.enemy.ai.AIMedium;
+import aca.oop.entities.mob.enemy.ai.AIHighest;
 import aca.oop.graphics.Sprite;
 
 public class Minvo extends Enemy {
 
    public Minvo(int x, int y, Board board) {
-      super(x, y, board, Sprite.minvo_dead, Game.getPlayerSpeed() * 2, 800);
+      super(x, y, board, Sprite.minvo_dead, Game.getPlayerSpeed(), 800);
       this.sprite = Sprite.minvo_right1;
-      ai = new AIMedium(board.getPlayer(), this);
+      ai = new AIHighest(board.getPlayer(), this);
       direction = ai.calculateDirection();
    }
 

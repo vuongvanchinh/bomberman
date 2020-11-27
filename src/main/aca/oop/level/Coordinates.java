@@ -18,4 +18,9 @@ public class Coordinates {
    public static int tileToPixel(double i) {
       return (int)(i * Game.TILES_SIZE);
    }
+   
+   public static void main(String[] args) {
+      System.out.println(pixelToTile(17 + 0));
+      System.out.println(pixelToTile(17 + 0 + 12));
+   }
 }

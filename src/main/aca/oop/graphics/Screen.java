@@ -102,16 +102,16 @@ public class Screen {
 		g.setFont(font);
 		g.setColor(Color.white);
 		drawCenteredString("GAME OVER", getRealWidth(), getRealHeight(), g);
-		
+
 		font = new Font("Arial", Font.PLAIN, 10 * Game.SCALE);
 		g.setFont(font);
 		g.setColor(Color.yellow);
-		drawCenteredString("Điểm: " + points, getRealWidth(), getRealHeight() + (Game.TILES_SIZE * 2) * Game.SCALE, g);
+		drawCenteredString("Score: " + points, getRealWidth(), getRealHeight() + (Game.TILES_SIZE * 2) * Game.SCALE, g);
 		
-		// font = new Font("Arial", Font.PLAIN, 10 * Game.SCALE);
-		// g.setFont(font);
-		// g.setColor(Color.GRAY);
-		// drawCenteredString(code, getRealWidth(), getRealHeight() * 2  - (Game.TILES_SIZE * 2) * Game.SCALE, g);
+		font = new Font("Arial", Font.PLAIN, 10 * Game.SCALE);
+		g.setFont(font);
+		g.setColor(Color.GRAY);
+		drawCenteredString("Press enter to start new game", getRealWidth(), getRealHeight() * 2  - (Game.TILES_SIZE * 2) * Game.SCALE, g);
 	}
 
 	public void drawChangeLevel(Graphics g, int level) {
@@ -126,9 +126,8 @@ public class Screen {
 	public void drawPaused(Graphics g) {
 		Font font = new Font("Arial", Font.PLAIN, 20 * Game.SCALE);
 		g.setFont(font);
-		g.setColor(Color.white);
-		drawCenteredString("Tạm dừng", getRealHeight(), getHeight(), g);
-
+		g.setColor(Color.green);
+		drawCenteredString("TẠM DỪNG", getRealWidth(), getRealHeight(), g);
 	}
 
 	private void drawCenteredString(String str, int w, int h, Graphics g) {

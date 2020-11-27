@@ -8,10 +8,32 @@ public class AIMedium extends AI {
    Player player;
    Enemy e;
 
+	int changeSpeed = 150;
+	boolean increase = false;
+	
    public AIMedium(Player player, Enemy e) {
       this.player = player;
       this.e = e;
-   }
+	}
+	
+	public void changeRandomSpeed() {
+		if (changeSpeed == 0) {
+			changeSpeed = 150;
+		} else {
+			int r = random.nextInt(2);
+			int t = changeSpeed % 10;
+			if (t == 0 && !increase && r == 1) {
+				e.addSpeed(0.25);
+				increase = true;
+			}
+			else if (t == 5 && increase && r == 0) {
+				e.addSpeed(-0.25);
+				increase = false;
+			}
+			changeSpeed--;
+			e.calculateMoveValues();
+		}
+	}
 
    /** 
     * direction.
@@ -22,24 +44,21 @@ public class AIMedium extends AI {
     */
    @Override
    public int calculateDirection() {
-		
+		changeRandomSpeed();
+
 		if(player == null) {
 			return random.nextInt(4);
       }
       int vertical = random.nextInt(2);
       
 		if(vertical == 1) {
-         //System.out.println("vertical = 1");
 			int v = calculateRowDirection();
 			if(v != -1)
 				return v;
 			else
 				return calculateColDirection();
-			
 		} else {
-         //System.out.println("vertical = 0");
 			int h = calculateColDirection();
-			
 			if(h != -1)
 				return h;
 			else
@@ -53,7 +72,7 @@ public class AIMedium extends AI {
 			return 3;
 		else if(player.getXTile() > e.getXTile())
 			return 1;
-		
+			
 		return -1;
 	}
 	
@@ -64,5 +83,4 @@ public class AIMedium extends AI {
 			return 2;
 		return -1;
 	}
-   
 }

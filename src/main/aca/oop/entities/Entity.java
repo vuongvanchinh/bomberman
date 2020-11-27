@@ -36,11 +36,24 @@ public abstract class Entity implements IRender {
 	}
 	
 	public int getXTile() {
-		return Coordinates.pixelToTile(x);
+		return Coordinates.pixelToTile(x + 2);
 	}
 	
+	public int getXRelateTile() {
+		return Coordinates.pixelToTile(x + sprite.SIZE / 2);
+	}
+
+	public int getYRelateTile() {
+		return Coordinates.pixelToTile(y + sprite.SIZE / 2);
+	}
+
 	public int getYTile() {
-		return Coordinates.pixelToTile(y);
+		return Coordinates.pixelToTile(y + 2);
+	}
+
+	public void shifter(double x, double y) {
+		this.x += x;
+		this.y += y;
 	}
 
 	public boolean checkCollision(Entity e) {
@@ -56,6 +69,23 @@ public abstract class Entity implements IRender {
 			vertical = (this.y - e.y) < e.sprite.getRealHeight();
 		} else {
 			vertical = (e.y - this.y) < this.sprite.getRealHeight();
+		}
+		return horizontal && vertical;
+	}
+
+	public boolean checkCollision(Entity e, int precision) {
+		boolean horizontal;
+		boolean vertical;
+		if (e.x <= this.x) {
+			horizontal = (this.x - e.x) < e.sprite.getRealWidth() - precision;
+		} else {
+			horizontal = (e.x - this.x) < this.sprite.getRealWidth() - precision;
+		}
+
+		if (e.y <= this.y) {
+			vertical = (this.y - e.y) < e.sprite.getRealHeight() - precision;
+		} else {
+			vertical = (e.y - this.y) < this.sprite.getRealHeight() - precision;
 		}
 		return horizontal && vertical;
 	}

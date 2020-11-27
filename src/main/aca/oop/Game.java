@@ -40,7 +40,7 @@ public class Game extends Canvas {
 	
 	public static final int TIME = 200;
 	public static final int POINTS = 0;
-	public static final int LIVES = 100;
+	public static final int LIVES = 3;
 	
 	protected static final int SCREEN_DELAY = 3;
 	
@@ -57,7 +57,8 @@ public class Game extends Canvas {
 	private Keyboard input;
 	private boolean running = false;
 	private boolean paused = true;
-	
+	private boolean gameOver = false;
+
 	private Board board;
 	private Screen screen;
 	private Frame frame;
@@ -122,6 +123,22 @@ public class Game extends Canvas {
 	private void update() {
 		input.update();
 		board.update();
+		if (input.pause) {
+			this.paused = !this.paused;
+			if (paused) {
+				frame.pauseGame();
+			}
+			else {
+				frame.resumeGame();
+			}
+		}
+		if (gameOver && input.enter) {
+			board.newGame();
+			gameOver = false;
+		}
+		if (input.turnAudio) {
+			Audio.turnAudio();
+		}
 	}
 	
 	public void start() {
@@ -213,6 +230,10 @@ public class Game extends Canvas {
 	
 	public void resetScreenDelay() {
 		screenDelay = SCREEN_DELAY;
+	}
+
+	public void setGameOver() {
+		this.gameOver  = true;
 	}
 
 	public Keyboard getInput() {

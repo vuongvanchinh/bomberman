@@ -19,8 +19,9 @@ public abstract class Enemy extends Mob {
    protected int points;
    protected double speed;
    protected AI ai;
-   protected final double  MAX_STEPS;
-   protected final double rest;
+
+   protected double MAX_STEPS;
+   protected double rest;
    protected double steps;
 
    protected int finalAnimation = 30;
@@ -30,11 +31,15 @@ public abstract class Enemy extends Mob {
       super(x, y, board);
       this.points = points;
       this.speed = speed;
-      this.MAX_STEPS = Game.TILES_SIZE / speed;
-      rest = (this.MAX_STEPS - (int) this.MAX_STEPS) / this.MAX_STEPS;
-      steps = MAX_STEPS;
+      calculateMoveValues();
       timeAfter = 20;
       deadSprite = dead;
+   }
+
+   public void calculateMoveValues() {
+      this.MAX_STEPS = Game.TILES_SIZE / this.speed;
+      rest = (MAX_STEPS - (int) MAX_STEPS) / MAX_STEPS;
+      steps = MAX_STEPS;
    }
 
    public void update() {
@@ -77,8 +82,8 @@ public abstract class Enemy extends Mob {
 		if(direction == 2) {ya++;}
 		if(direction == 3) {xa--;}
 		
-      if (canMove(xa *  speed, ya * speed)) {
-         steps -= (1 + rest);
+      if (canMove(xa , ya)) {
+         steps -= 1 + rest;
          move(xa * speed, ya * speed);
          moving = true;
       } else {
@@ -124,47 +129,45 @@ public abstract class Enemy extends Mob {
 
    @Override
    protected boolean canMove(double x, double y) {
-      // double xr = this.x;
-      // double yr = this.y - 16;
-
-      // if(direction == 0) {
-      //    yr += sprite.getSize() - 1 ;
-      //    xr += sprite.getSize()/2;
-      // } 
-		// if(direction == 1) {
-      //    yr += sprite.getSize() / 2;
-      //    xr += 1;
+      // int xt = Coordinates.pixelToTile(this.x + x);
+      // int yt = Coordinates.pixelToTile(this.y + y);
+      // int aroundX = Coordinates.pixelToTile(this.x + x + this.sprite.SIZE - 0.1) - xt;
+      // int aroundY = Coordinates.pixelToTile(this.y + y + this.sprite.SIZE - 0.1) - yt;
+      // for (int i = 0; i <= aroundX; i++) {
+      //    for (int j = 0; j <= aroundY; j++) {
+      //       Entity a = board.getEntity(xt + i, yt + j, this);
+      //       if (!a.collide(this)) {
+      //          return false;
+      //       }
+      //    }
       // }
-		// if(direction == 2) {
-      //    xr += sprite.getSize() / 2;
-      //    yr += 1;
-      // }
-		// if(direction == 3) {
-      //    xr += sprite.getSize() -1;
-      //    yr += sprite.getSize()/2;
-      // }
+      // return true;
+      
+      double xr = this.x;
+      double yr =  this.y; //subtract y to get more accurate results
 		
-		// int xx = Coordinates.pixelToTile(xr) +(int)x;
-		// int yy = Coordinates.pixelToTile(yr) +(int)y;
-		
-      // Entity a = board.getEntity(xx, yy, this); //entity of the position we want to go
-
-      // return a.collide(this);
-      int xt = Coordinates.pixelToTile(this.x + x);
-      int yt = Coordinates.pixelToTile(this.y + y);
-      int aroundX = Coordinates.pixelToTile(this.x + x + 15) - xt;
-      int aroundY = Coordinates.pixelToTile(this.y + y + 15) - yt;
-     
-      for (int i = 0; i <= aroundX; i++) {
-         for (int j = 0; j <= aroundY; j++) {
-            Entity a = board.getEntity(xt + i, yt + j, this);
-            //System.out.println(a.getClass() + " " + xt + " " + yt);
-            if (!a.collide(this)) {
-               return false;
-            }
-         }
+		//the thing is, subract 15 to 16 (sprite size), so if we add 1 tile we get the next pixel tile with this
+		//we avoid the shaking inside tiles with the help of steps
+		if( this.direction == 0) {
+			yr +=  this.sprite.getSize() -1;
+			xr +=  this.sprite.getSize()/2; 
+		} 
+		if( this.direction == 1) {
+         yr +=  this.sprite.getSize() / 2;
+         xr += 1;
       }
-      return true;
+		if( this.direction == 2) {
+         xr +=  this.sprite.getSize() / 2;
+         yr += 1;
+      }
+		if( this.direction == 3) {
+         xr +=  this.sprite.getSize() -1;
+         yr +=  this.sprite.getSize()/2;
+      }		
+		int xx = Coordinates.pixelToTile(xr) +(int)x;
+		int yy = Coordinates.pixelToTile(yr) +(int)y;
+		Entity a =  this.board.getEntity(xx, yy, this); //entity of the position we want to go
+		return a.collide(this);
    }
 
    
@@ -186,5 +189,9 @@ public abstract class Enemy extends Mob {
       }
 
       return true;
+   }
+
+   public void addSpeed(double offset) {
+      this.speed += offset;
    }
 }

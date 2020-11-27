@@ -31,21 +31,21 @@ import aca.oop.level.FileLevel;
 public class Board implements IRender {
    public int width;
    public int height;
+   public boolean playAudio = true;
+
+   private int screenToShow = -1; //1:endgame, 2:changeLevel, 3:paused
+
    protected Game game;
    protected Level level;
    protected Keyboard input;
    protected Screen screen;
 
-
    public List<Mob> mobs = new ArrayList<Mob>();
 	protected List<Bomb> bombs = new ArrayList<Bomb>();
    public List<Message> messages = new ArrayList<Message>();
    public Entity[] entities;
-
-   private int screenToShow = -1; //1:endgame, 2:changeLevel, 3:paused
    
    private int record = 0;
-
    private int time = Game.TIME;
 	private int points = Game.POINTS;
    private int lives = Game.LIVES;
@@ -55,7 +55,7 @@ public class Board implements IRender {
       this.input = input;
       this.screen = screen;
       this.record = getRecord(true);
-      changeLevel(3); 
+      changeLevel(5);
    }
 
   /**
@@ -120,7 +120,7 @@ public class Board implements IRender {
       screenToShow = 2;
       game.resetScreenDelay();
       game.pause();
-      game.pause();
+      //game.pause();
       mobs.clear();
       bombs.clear();
       messages.clear();
@@ -174,6 +174,7 @@ public class Board implements IRender {
       this.screenToShow = 1;
       this.game.resetScreenDelay();
       this.game.pause();
+      this.game.setGameOver();
    }
 
    public boolean detectNoEnemies() {
@@ -461,11 +462,8 @@ public class Board implements IRender {
 				continue;
          }
          Entity temp = getEntityAt(x, y);
-			if(temp instanceof Grass && cur.checkCollision(t)) {
-            //System.err.println("board.java: " + x + " " + y);
-            if (result != null) {
-               cur.kill();
-            } else { result = cur;}
+			if(temp instanceof Grass && cur.checkCollision(t, 4)) {
+            return cur;
 			}
 		}
 		
@@ -554,7 +552,7 @@ public class Board implements IRender {
 	|--------------------------------------------------------------------------
 	 */
 	protected void updateEntities() {
-		if(game.isPaused() ) return;
+		if(game.isPaused()) return;
 		for (int i = 0; i < entities.length; i++) {
 			entities[i].update();
       }

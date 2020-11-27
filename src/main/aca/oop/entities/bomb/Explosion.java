@@ -6,7 +6,6 @@ import aca.oop.entities.Entity;
 import aca.oop.entities.mob.Mob;
 import aca.oop.graphics.Screen;
 import aca.oop.graphics.Sprite;
-import aca.oop.level.Coordinates;
 
 public class Explosion extends Entity {
    protected boolean last = false;
@@ -19,7 +18,8 @@ public class Explosion extends Entity {
       this.y = y;
       this.last = last;
       this.board = board;
-      
+      this.sprite = Sprite.explosion_horizontal;
+
       switch(direction) {
          case 0:
             if (!last) {
@@ -72,7 +72,7 @@ public class Explosion extends Entity {
    @Override
    public boolean collide(Entity e) {
       System.out.println("Hello Explosion.java");
-      if(e instanceof Mob) {
+      if(e instanceof Mob && e.checkCollision(this, 3)) {
 			((Mob)e).kill();
 		}
 		return true;
