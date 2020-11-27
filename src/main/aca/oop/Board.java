@@ -55,7 +55,7 @@ public class Board implements IRender {
       this.input = input;
       this.screen = screen;
       this.record = getRecord(true);
-      changeLevel(3);
+      changeLevel(1);
    }
 
   /**
@@ -112,6 +112,7 @@ public class Board implements IRender {
  */
    public void newGame() {
       resetProperties();
+      this.getPlayer().removeItems();
       changeLevel(1);
    }
 
@@ -120,11 +121,11 @@ public class Board implements IRender {
       screenToShow = 2;
       game.resetScreenDelay();
       game.pause();
-      //game.pause();
+      
       mobs.clear();
       bombs.clear();
       messages.clear();
-
+      System.out.println("new game");
       try {//res\levels\Level1.txt
          this.level = new FileLevel("res/levels/Level" + level + ".txt", this);
          this.entities = new Entity[this.level.getHeight() * this.level.getWidth()];
@@ -132,10 +133,6 @@ public class Board implements IRender {
       } catch (LoadLevelException e) {
          endGame(); // no more level;
       }
-   }
-
-   public void changeLevelByCode(String str) {
-   
    }
 
    public boolean isItemUsed(int x, int y, int level) {
@@ -429,7 +426,7 @@ public class Board implements IRender {
 		while(itr.hasNext()) {
 			cur = itr.next();
 			
-			if(cur.checkCollision(e ,1)) {
+			if(cur.checkCollision(e ,2)) {
             cur.kill();
             killed = true;
          }

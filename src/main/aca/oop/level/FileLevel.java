@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.StringTokenizer;
 
 import aca.oop.Board;
-import aca.oop.Game;
 import aca.oop.entities.LayeredEntity;
 import aca.oop.entities.mob.Player;
 import aca.oop.entities.mob.enemy.Balloom;
@@ -79,15 +78,16 @@ public class FileLevel extends Level {
 						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.wall));
             break;
          case 'b':
+            System.out.println("bomb item");
             LayeredEntity layer = new LayeredEntity(
 						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), 
                   new Grass(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.grass),
                   new Brick(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), Sprite.brick)
                   );
             if (!this.board.isItemUsed(
-						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), thLevel)) {
-               layer.addBeforeTop(new BombItem(
-						Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), thLevel,  Sprite.powerup_bombs));
+               Coordinates.tileToPixel(x), Coordinates.tileToPixel(y), thLevel)) {
+               layer.addBeforeTop(new BombItem(Coordinates.tileToPixel(x),
+                  Coordinates.tileToPixel(y), thLevel, Sprite.powerup_bombs));
             }
             board.addEntities(pos, layer);
             break;

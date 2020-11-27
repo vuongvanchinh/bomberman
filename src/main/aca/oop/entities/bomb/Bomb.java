@@ -79,10 +79,10 @@ public class Bomb extends AnimatedEntity {
    protected void explosion() {
       allowedToPassThru = true;
       exploded = true;
-      Mob a = board.getMobAt(Coordinates.pixelToTile(this.x), Coordinates.pixelToTile(this.y));
-      if (a != null) {
-         a.kill();
-      }
+      // Mob a = board.getMobAt(Coordinates.pixelToTile(this.x), Coordinates.pixelToTile(this.y));
+      // if (a != null) {
+      //    a.kill();
+      // }
       board.killMobAround(this);
 
       dExplosions = new DirectionalExplosion[4];
