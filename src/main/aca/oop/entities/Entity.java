@@ -90,6 +90,8 @@ public abstract class Entity implements IRender {
 		return horizontal && vertical;
 	}
 
+	
+
 	/**
 	 * test.
 	 * @param args

@@ -1,5 +1,6 @@
 package aca.oop.entities.mob.enemy.ai;
 
+import aca.oop.Game;
 import aca.oop.entities.mob.Player;
 import aca.oop.entities.mob.enemy.Enemy;
 
@@ -23,11 +24,11 @@ public class AIMedium extends AI {
 			int r = random.nextInt(2);
 			int t = changeSpeed % 10;
 			if (t == 0 && !increase && r == 1) {
-				e.addSpeed(0.25);
+				e.addSpeed(Game.getPlayerSpeed() / 2);
 				increase = true;
 			}
 			else if (t == 5 && increase && r == 0) {
-				e.addSpeed(-0.25);
+				e.addSpeed(-Game.getPlayerSpeed() / 2);
 				increase = false;
 			}
 			changeSpeed--;

@@ -8,7 +8,7 @@ import aca.oop.graphics.Sprite;
 public class Kondoria extends Enemy {
 
    public Kondoria(int x, int y, Board board) {
-      super(x, y, board, Sprite.kondoria_dead, Game.getPlayerSpeed() / 2, 1000);
+      super(x, y, board, Sprite.kondoria_dead, Game.getPlayerSpeed() * 0.75, 1000);
       this.sprite = Sprite.kondoria_right1;
       ai = new AIHigher(board.getPlayer(), this);
       direction = ai.calculateDirection();

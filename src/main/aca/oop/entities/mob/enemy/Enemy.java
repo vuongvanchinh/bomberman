@@ -173,7 +173,9 @@ public abstract class Enemy extends Mob {
    
    public boolean collide(Entity e) {
       if (e instanceof Enemy) {
+         //backForward();
          return false;
+         
       }
 
       if (e instanceof DirectionalExplosion) {
@@ -194,4 +196,10 @@ public abstract class Enemy extends Mob {
    public void addSpeed(double offset) {
       this.speed += offset;
    }
+
+   // public void backForward() {
+   //    this.x = Coordinates.pixelToTile(this.x + 2) * 16;
+   //    this.y = Coordinates.pixelToTile(this.y + 2) * 16;
+   //    steps = MAX_STEPS;
+   // }
 }

@@ -41,22 +41,11 @@ public class Frame extends JFrame {
       addWindowListener(new java.awt.event.WindowAdapter() {
          @Override
          public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-            game.pause();
-            boolean quit = JOptionPane.showConfirmDialog(null, 
-               "Are you sure you want to quit game?", "Quit?", 
-               JOptionPane.YES_NO_OPTION,
-               JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION; 
-            if (quit){
-               writeRecord();
-               System.exit(0);
-            } else {
-               System.out.println("No quit");
-               //System.exit(1);
-               game.run();
-            }
-         }
-     });
-
+            writeRecord();
+            System.exit(0);
+         } 
+      });
+     
       game.start();
    }
 
